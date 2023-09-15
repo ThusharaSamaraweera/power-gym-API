@@ -1,5 +1,7 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
+npm run compile
+npx pretty-quick --staged
 npm run format
 npm run lint
