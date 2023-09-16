@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { UserService } from './user.service';
-import { UserRepository } from './user.repository';
+import { UserRepository } from './repository/user.repository';
 import { DatabaseModule } from 'src/common/database/mongodb';
 import { UserDocument, UserSchema } from './modal';
 
