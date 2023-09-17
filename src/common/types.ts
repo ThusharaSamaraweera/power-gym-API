@@ -1,3 +1,5 @@
+import { Types } from 'mongoose';
+
 export enum UserRoles {
   ADMIN = 'admin',
   TRAINER = 'trainer',
@@ -11,4 +13,10 @@ export enum UserStatus {
 
 export enum ServiceLogger {
   AUTH_SERVICE = 'AUTH_SERVICE',
+}
+
+export interface IJwtToken {
+  id: Types.ObjectId;
+  email: string;
+  userRole: UserRoles;
 }
