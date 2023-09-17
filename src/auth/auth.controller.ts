@@ -9,6 +9,8 @@ import { AuthService } from './auth.service';
 import { UserService } from 'src/user/user.service';
 import { SignupDto } from './dto/signup.dto';
 import { ServiceLogger } from 'src/common/types';
+import { UserDocument } from 'src/user/modal';
+import { LoginDto } from './dto/Login.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -27,6 +29,24 @@ export class AuthController {
       this.logger.error(`User already exists with email ${body.email}`);
       throw new BadRequestException('User already exists');
     }
-    return this.authService.signup(body);
+    return this.authService.signup(this.logger, body);
+  }
+
+  @Post('login')
+  async login(@Body() body: LoginDto) {
+    const existingUser: UserDocument = await this.userService.getUserByEmail(
+      body.email,
+    );
+
+    if (!existingUser || !existingUser._id) {
+      this.logger.error(`User not found with email ${body.email}`);
+      throw new BadRequestException('Invalid credentials');
+    }
+    return await this.authService.login(
+      this.logger,
+      body.email,
+      body.password,
+      existingUser,
+    );
   }
 }

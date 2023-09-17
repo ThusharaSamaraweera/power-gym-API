@@ -10,6 +10,7 @@ import 'pino-pretty';
           target: 'pino-pretty',
           options: {
             singleLine: true,
+            colorize: true,
           },
         },
       },
