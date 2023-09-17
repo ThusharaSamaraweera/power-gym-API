@@ -1,5 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { UserRepository } from './repository/user.repository';
+import { Types } from 'mongoose';
 
 @Injectable()
 export class UserService {
@@ -9,7 +10,7 @@ export class UserService {
     return this.userRepository.findOne({ email });
   }
 
-  async getUserById(logger: Logger, id: string) {
+  async getUserById(logger: Logger, id: Types.ObjectId) {
     logger.log(`getUserById: ${id}`);
     const user = await this.userRepository.findOne({ id });
 
