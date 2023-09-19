@@ -3,7 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
 import { Request } from 'express';
 import { ExtractJwt, Strategy } from 'passport-jwt';
-import { ServiceLogger } from 'src/common/types';
+import { IJwtToken, ServiceLogger } from 'src/common/types';
 import { UserService } from 'src/user/user.service';
 
 @Injectable()
@@ -30,5 +30,10 @@ export class JwtAuthGuard extends PassportStrategy(Strategy) {
       ]),
       secretOrKey: configService.get('JWT_SECRET'),
     });
+  }
+
+  async validate({ id }: IJwtToken) {
+    this.logger.log(`Validating user with id: ${id}`);
+    return this.userService.getUserById(this.logger, id);
   }
 }

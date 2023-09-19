@@ -2,33 +2,33 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { AbstractDocument } from 'src/common/database/mongodb/abstract.schema';
 import { UserRoles, UserStatus } from 'src/common/types';
 
-@Schema({ versionKey: false })
+@Schema({ timestamps: true })
 export class UserDocument extends AbstractDocument {
-  @Prop()
+  @Prop({ unique: true })
   email: string;
 
-  @Prop()
+  @Prop({ required: true })
   password: string;
 
-  @Prop()
+  @Prop({ required: true })
   name: string;
 
-  @Prop()
+  @Prop({ required: true })
   role: UserRoles;
 
-  @Prop()
+  @Prop({ required: true })
   dateOfBirth: string;
 
-  @Prop()
+  @Prop({ required: true })
   gender: string;
 
   @Prop()
   image: string;
 
-  @Prop()
+  @Prop({ required: true })
   phone: string;
 
-  @Prop()
+  @Prop({ required: true })
   status: UserStatus;
 }
 
