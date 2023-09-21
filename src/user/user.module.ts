@@ -2,7 +2,12 @@ import { Module } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UserRepository } from './repository/user.repository';
 import { DatabaseModule } from 'src/common/database/mongodb';
-import { BodyHealthInfoDocument, UserDocument, UserSchema } from './modal';
+import {
+  BodyHealthInfoDocument,
+  BodyHealthInfoSchema,
+  UserDocument,
+  UserSchema,
+} from './modal';
 import { ConfigModule } from 'src/common/config/config.module';
 
 @Module({
@@ -10,7 +15,7 @@ import { ConfigModule } from 'src/common/config/config.module';
     ConfigModule,
     DatabaseModule.forfeature([
       { name: UserDocument.name, schema: UserSchema },
-      { name: BodyHealthInfoDocument.name, schema: BodyHealthInfoDocument },
+      { name: BodyHealthInfoDocument.name, schema: BodyHealthInfoSchema },
     ]),
   ],
   providers: [UserService, UserRepository],
