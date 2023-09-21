@@ -1,4 +1,6 @@
+import { ApiProperty } from '@nestjs/swagger';
 import {
+  IsDate,
   IsEmail,
   IsEnum,
   IsNotEmpty,
@@ -10,37 +12,61 @@ import {
 import { UserRoles } from 'src/common/types';
 
 export class SignupRequestDto {
+  @ApiProperty({
+    required: true,
+  })
   @IsEmail()
   @IsNotEmpty()
   email: string;
 
+  @ApiProperty({
+    required: true,
+  })
   @IsString()
   @MinLength(8)
   @IsNotEmpty()
   password: string;
 
+  @ApiProperty({
+    required: true,
+  })
   @IsString()
   @MinLength(5)
   @IsNotEmpty()
   @MaxLength(20)
   name: string;
 
+  @ApiProperty({
+    required: true,
+  })
   @IsEnum(UserRoles)
   @IsNotEmpty()
   role: UserRoles;
 
-  @IsString()
+  @ApiProperty({
+    required: true,
+  })
+  @IsDate()
   @IsNotEmpty()
-  dateOfBirth: string;
+  dateOfBirth: Date;
 
+  @ApiProperty({
+    required: true,
+  })
   @IsString()
   @IsNotEmpty()
   gender: string;
 
+  @ApiProperty({
+    required: false,
+  })
   @IsString()
   @IsOptional()
   image: string;
 
+  @ApiProperty({
+    required: true,
+  })
   @IsString()
   @IsNotEmpty()
   phone: string;

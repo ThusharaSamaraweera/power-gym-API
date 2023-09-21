@@ -17,7 +17,7 @@ export class UserDocument extends AbstractDocument {
   role: UserRoles;
 
   @Prop({ required: true })
-  dateOfBirth: string;
+  dateOfBirth: Date;
 
   @Prop({ required: true })
   gender: string;

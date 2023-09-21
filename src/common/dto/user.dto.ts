@@ -13,7 +13,7 @@ export class UserDto {
 
   role: UserRoles;
 
-  dateOfBirth: string;
+  dateOfBirth: Date;
 
   gender: string;
 
