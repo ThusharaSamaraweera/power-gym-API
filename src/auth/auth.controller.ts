@@ -11,7 +11,8 @@ import { SignupRequestDto } from './dto/signup-request.dto';
 import { ServiceLogger } from 'src/common/types';
 import { UserDocument } from 'src/user/modal';
 import { LoginRequestDto } from './dto/login-request.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
+import { SignupResponseDto } from './dto/signup-response.dto';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -22,6 +23,7 @@ export class AuthController {
     private readonly userService: UserService,
   ) {}
 
+  @ApiCreatedResponse({ type: SignupResponseDto })
   @Post('signup')
   async signup(@Body() body: SignupRequestDto) {
     // Get user by email if exists
