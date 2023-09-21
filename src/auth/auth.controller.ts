@@ -7,11 +7,13 @@ import {
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { UserService } from 'src/user/user.service';
-import { SignupDto } from './dto/signup.dto';
+import { SignupRequestDto } from './dto/signup-request.dto';
 import { ServiceLogger } from 'src/common/types';
 import { UserDocument } from 'src/user/modal';
-import { LoginDto } from './dto/Login.dto';
+import { LoginRequestDto } from './dto/login-request.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
   private readonly logger = new Logger(ServiceLogger.AUTH_SERVICE);
@@ -21,7 +23,7 @@ export class AuthController {
   ) {}
 
   @Post('signup')
-  async signup(@Body() body: SignupDto) {
+  async signup(@Body() body: SignupRequestDto) {
     // Get user by email if exists
     const existingUser = await this.userService.getUserByEmail(body.email);
 
@@ -33,7 +35,7 @@ export class AuthController {
   }
 
   @Post('login')
-  async login(@Body() body: LoginDto) {
+  async login(@Body() body: LoginRequestDto) {
     const existingUser: UserDocument = await this.userService.getUserByEmail(
       body.email,
     );

@@ -1,12 +1,13 @@
 import { Injectable, Logger } from '@nestjs/common';
 import * as bcrypt from 'bcryptjs';
-import { SignupDto } from './dto/signup.dto';
+import { SignupRequestDto } from './dto/signup-request.dto';
 import { IJwtToken, UserStatus } from 'src/common/types';
 import { UserRepository } from 'src/user/repository';
 import { UserService } from 'src/user/user.service';
 import { JwtService } from '@nestjs/jwt';
 import { UserDto } from 'src/common/dto/user.dto';
 import { LoginResponse } from './types';
+import { UserDocument } from 'src/user/modal';
 
 @Injectable()
 export class AuthService {
@@ -16,7 +17,7 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async signup(logger: Logger, body: SignupDto) {
+  async signup(logger: Logger, body: SignupRequestDto): Promise<UserDocument> {
     logger.log(`Signup service called with email ${body.email}`);
     return await this.userRepository.create({
       ...body,

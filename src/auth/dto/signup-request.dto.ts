@@ -9,7 +9,7 @@ import {
 } from 'class-validator';
 import { UserRoles } from 'src/common/types';
 
-export class SignupDto {
+export class SignupRequestDto {
   @IsEmail()
   @IsNotEmpty()
   email: string;
