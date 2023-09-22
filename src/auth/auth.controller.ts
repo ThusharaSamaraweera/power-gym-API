@@ -13,6 +13,7 @@ import { UserDocument } from 'src/user/modal';
 import { LoginRequestDto } from './dto/login-request.dto';
 import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 import { SignupResponseDto } from './dto/signup-response.dto';
+import { LoginResponseDto } from './dto/login-response.dto';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -36,7 +37,7 @@ export class AuthController {
     return this.authService.signup(this.logger, body);
   }
 
-  @ApiCreatedResponse({ type: LoginRequestDto })
+  @ApiCreatedResponse({ type: LoginResponseDto })
   @Post('login')
   async login(@Body() body: LoginRequestDto) {
     const existingUser: UserDocument = await this.userService.getUserByEmail(
