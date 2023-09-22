@@ -36,6 +36,7 @@ export class AuthController {
     return this.authService.signup(this.logger, body);
   }
 
+  @ApiCreatedResponse({ type: LoginRequestDto })
   @Post('login')
   async login(@Body() body: LoginRequestDto) {
     const existingUser: UserDocument = await this.userService.getUserByEmail(
