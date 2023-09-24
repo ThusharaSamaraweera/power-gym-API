@@ -9,3 +9,15 @@
 //   bloodPressure: string;
 //   heartRate: number;
 // }
+
+export enum PACKAGE_TYPE {
+  FREE = 'FREE',
+  BASIC = 'BASIC',
+  PREMIUM = 'PREMIUM',
+}
+
+export enum PACKAGE_DURATION {
+  THREE_MONTHS = 'THREE_MONTHS',
+  SIX_MONTHS = 'SIX_MONTHS',
+  ANNUAL = 'ANNUAL',
+}

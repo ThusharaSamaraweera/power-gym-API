@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { AbstractDocument } from 'src/common/database/mongodb/abstract.schema';
 import { UserRoles, UserStatus } from 'src/common/types';
+import { PACKAGE_DURATION, PACKAGE_TYPE } from '../types';
 
 @Schema({ timestamps: true })
 export class UserDocument extends AbstractDocument {
@@ -30,6 +31,26 @@ export class UserDocument extends AbstractDocument {
 
   @Prop({ required: true })
   status: UserStatus;
+
+  @Prop({
+    enum: PACKAGE_TYPE,
+    required: false,
+  })
+  packageType: PACKAGE_TYPE;
+
+  @Prop({
+    enum: PACKAGE_DURATION,
+    required: false,
+    default: null,
+  })
+  packageDuration: PACKAGE_DURATION | null;
+
+  @Prop({
+    type: Date,
+    required: false,
+    default: null,
+  })
+  packageStartDate: Date | null;
 }
 
 export const UserSchema = SchemaFactory.createForClass(UserDocument);
