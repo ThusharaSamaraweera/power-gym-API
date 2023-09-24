@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import {
   IsDate,
   IsEmail,
-  IsEnum,
+  IsIn,
   IsNotEmpty,
   IsOptional,
   IsString,
@@ -39,7 +39,7 @@ export class SignupRequestDto {
   @ApiProperty({
     required: true,
   })
-  @IsEnum(UserRoles)
+  @IsIn([UserRoles.MEMBER])
   @IsNotEmpty()
   role: UserRoles;
 

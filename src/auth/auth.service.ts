@@ -3,7 +3,6 @@ import * as bcrypt from 'bcryptjs';
 import { SignupRequestDto } from './dto/signup-request.dto';
 import { IJwtToken, UserStatus } from 'src/common/types';
 import { UserRepository } from 'src/user/repository';
-import { UserService } from 'src/user/user.service';
 import { JwtService } from '@nestjs/jwt';
 import { UserDto } from 'src/common/dto/user.dto';
 import { LoginResponse } from './types';
@@ -13,7 +12,6 @@ import { UserDocument } from 'src/user/modal';
 export class AuthService {
   constructor(
     private readonly userRepository: UserRepository,
-    private readonly userService: UserService,
     private readonly jwtService: JwtService,
   ) {}
 
