@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { UserRoles, UserStatus } from 'src/common/types';
+import { UserRoles, UserStatus } from 'src/common';
+import { PACKAGE_TYPE } from 'src/user/types';
 
 export class SignupResponseDto {
   @ApiProperty({
@@ -32,4 +33,9 @@ export class SignupResponseDto {
     enum: UserStatus,
   })
   status: UserStatus;
+
+  @ApiProperty({
+    enum: PACKAGE_TYPE,
+  })
+  packageType: PACKAGE_TYPE;
 }
