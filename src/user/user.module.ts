@@ -9,6 +9,9 @@ import {
   UserSchema,
 } from './modal';
 import { ConfigModule } from 'src/common/config/config.module';
+import { UserController } from './user.controller';
+import { BodyHealthInfoRepository } from './repository/body-health-info.repository';
+import { BodyHealthInfoService } from './bodyHealthInfo.service';
 
 @Module({
   imports: [
@@ -18,6 +21,12 @@ import { ConfigModule } from 'src/common/config/config.module';
       { name: BodyHealthInfoDocument.name, schema: BodyHealthInfoSchema },
     ]),
   ],
-  providers: [UserService, UserRepository],
+  providers: [
+    UserService,
+    UserRepository,
+    BodyHealthInfoRepository,
+    BodyHealthInfoService,
+  ],
+  controllers: [UserController],
 })
 export class UserModule {}
