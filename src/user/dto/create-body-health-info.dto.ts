@@ -26,7 +26,11 @@ export class CreateBodyHealthInfoDto {
   @IsOptional()
   note: string;
 
-  @ApiProperty()
+  @ApiProperty({
+    type: String,
+    format: 'email',
+    description: 'Email of the user who verified the body health info',
+  })
   @IsEmail()
   @IsNotEmpty()
   verifiedBy: string;
