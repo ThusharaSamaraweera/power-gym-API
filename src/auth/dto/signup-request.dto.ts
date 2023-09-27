@@ -50,7 +50,7 @@ export class SignupRequestDto {
   })
   @IsDate()
   @IsNotEmpty()
-  dateOfBirth: Date;
+  dateOfBirth: string;
 
   @ApiProperty({
     required: true,

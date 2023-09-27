@@ -2,6 +2,7 @@ import { IsOptional } from 'class-validator';
 import { UserRoles, UserStatus } from '../types';
 import { Types } from 'mongoose';
 import { ApiProperty } from '@nestjs/swagger';
+import { PACKAGE_TYPE } from 'src/user/types';
 
 export class UserDto {
   @ApiProperty({
@@ -23,17 +24,22 @@ export class UserDto {
   role: UserRoles;
 
   @ApiProperty()
-  dateOfBirth: Date;
+  dateOfBirth: string;
 
   @ApiProperty()
   gender: string;
 
   @ApiProperty()
-  image: string;
+  image?: string;
 
   @ApiProperty()
   phone: string;
 
   @ApiProperty()
   status: UserStatus;
+
+  @ApiProperty({
+    enum: PACKAGE_TYPE,
+  })
+  packageType?: PACKAGE_TYPE;
 }

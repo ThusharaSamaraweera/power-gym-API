@@ -18,13 +18,13 @@ export class UserDocument extends AbstractDocument {
   role: UserRoles;
 
   @Prop({ required: true })
-  dateOfBirth: Date;
+  dateOfBirth: string;
 
   @Prop({ required: true })
   gender: string;
 
   @Prop()
-  image: string;
+  image?: string;
 
   @Prop({ required: true })
   phone: string;
@@ -36,21 +36,20 @@ export class UserDocument extends AbstractDocument {
     enum: PACKAGE_TYPE,
     required: false,
   })
-  packageType: PACKAGE_TYPE;
+  packageType?: PACKAGE_TYPE;
 
   @Prop({
     enum: PACKAGE_DURATION,
     required: false,
     default: undefined,
   })
-  packageDuration: PACKAGE_DURATION | null | undefined;
+  packageDuration?: PACKAGE_DURATION | null | undefined;
 
   @Prop({
-    type: Date,
     required: false,
     default: null,
   })
-  packageStartDate: Date | null;
+  packageStartDate?: string | null;
 }
 
 export const UserSchema = SchemaFactory.createForClass(UserDocument);

@@ -24,7 +24,8 @@ export class AuthService {
       ...body,
       password: await bcrypt.hash(body.password, 10),
       status: UserStatus.ACTIVE,
-      packageStartDate: isFreePackage ? new Date() : null,
+      dateOfBirth: new Date(body.dateOfBirth).toISOString(),
+      packageStartDate: isFreePackage ? new Date().toISOString() : null,
     });
   }
 
