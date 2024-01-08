@@ -11,7 +11,7 @@ import {
   MinLength,
 } from 'class-validator';
 import { UserRoles } from 'src/common';
-import { PACKAGE_DURATION, PACKAGE_TYPE } from 'src/user/types';
+import { PACKAGE_TYPE } from 'src/user/types';
 
 export class SignupRequestDto {
   @ApiProperty({
@@ -48,7 +48,7 @@ export class SignupRequestDto {
   @ApiProperty({
     required: true,
   })
-  @IsDate()
+  // @IsDate()
   @IsNotEmpty()
   dateOfBirth: string;
 
@@ -82,11 +82,11 @@ export class SignupRequestDto {
   @IsString()
   packageType: PACKAGE_TYPE;
 
-  @ApiProperty({
-    required: false,
-    enum: PACKAGE_DURATION,
-  })
-  @IsEnum(PACKAGE_DURATION)
-  @IsOptional()
-  packageDuration: PACKAGE_DURATION;
+  // @ApiProperty({
+  //   required: false,
+  //   enum: PACKAGE_DURATION,
+  // })
+  // @IsEnum(PACKAGE_DURATION)
+  // @IsOptional()
+  // packageDuration: PACKAGE_DURATION;
 }

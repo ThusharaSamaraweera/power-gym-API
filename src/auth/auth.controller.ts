@@ -14,7 +14,6 @@ import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 import { SignupResponseDto } from './dto/signup-response.dto';
 import { LoginResponseDto } from './dto/login-response.dto';
 import { ServiceLogger } from 'src/common';
-import { PACKAGE_TYPE } from 'src/user/types';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -36,18 +35,6 @@ export class AuthController {
       throw new BadRequestException('User already exists');
     }
 
-    // Check if package duration is available for provided package type
-    if (
-      [PACKAGE_TYPE.BASIC, PACKAGE_TYPE.PREMIUM].includes(body.packageType) &&
-      !body.packageDuration
-    ) {
-      this.logger.error(
-        `Package duration is required for package type ${body.packageType}`,
-      );
-      throw new BadRequestException(
-        `Package duration is required for package type ${body.packageType}`,
-      );
-    }
     return this.authService.signup(this.logger, body);
   }
 
