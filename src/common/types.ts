@@ -1,14 +1,14 @@
 import { Types } from 'mongoose';
 
 export enum UserRoles {
-  ADMIN = 'admin',
-  TRAINER = 'trainer',
-  MEMBER = 'member',
+  ADMIN = 'ADMIN',
+  TRAINER = 'TRAINER',
+  MEMBER = 'MEMBER',
 }
 
 export enum UserStatus {
-  ACTIVE = 'active',
-  DISABLED = 'disabled',
+  ACTIVE = 'ACTIVE',
+  DISABLED = 'DISABLED',
 }
 
 export interface IJwtToken {
