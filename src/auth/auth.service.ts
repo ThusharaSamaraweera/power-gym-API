@@ -1,9 +1,8 @@
 import { Injectable, Logger } from '@nestjs/common';
 import * as bcrypt from 'bcryptjs';
 import { SignupRequestDto } from './dto/signup-request.dto';
-import { IJwtToken, UserStatus } from 'src/common/types';
+import { IJwtToken, UserStatus } from 'src/common';
 import { UserRepository } from 'src/user/repository';
-import { UserService } from 'src/user/user.service';
 import { JwtService } from '@nestjs/jwt';
 import { UserDto } from 'src/common/dto/user.dto';
 import { LoginResponse } from './types';
@@ -13,16 +12,20 @@ import { UserDocument } from 'src/user/modal';
 export class AuthService {
   constructor(
     private readonly userRepository: UserRepository,
-    private readonly userService: UserService,
     private readonly jwtService: JwtService,
   ) {}
 
   async signup(logger: Logger, body: SignupRequestDto): Promise<UserDocument> {
     logger.log(`Signup service called with email ${body.email}`);
+
+    const isFreePackage = body.packageType === 'FREE';
+
     return await this.userRepository.create({
       ...body,
       password: await bcrypt.hash(body.password, 10),
       status: UserStatus.ACTIVE,
+      dateOfBirth: new Date(body.dateOfBirth).toISOString(),
+      packageStartDate: isFreePackage ? new Date().toISOString() : null,
     });
   }
 

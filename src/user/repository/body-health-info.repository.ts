@@ -5,8 +5,8 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
 @Injectable()
-export class BodyHealthRepository extends AbstractRepository<BodyHealthInfoDocument> {
-  protected readonly logger = new Logger(BodyHealthRepository.name);
+export class BodyHealthInfoRepository extends AbstractRepository<BodyHealthInfoDocument> {
+  protected readonly logger = new Logger(BodyHealthInfoRepository.name);
 
   constructor(
     @InjectModel(BodyHealthInfoDocument.name)

@@ -1,17 +1,18 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { AbstractDocument } from 'src/common/database/mongodb';
-import { BodyInfo, HealthInfo } from '../types';
+import { BodyInfoDto, HealthInfoDto } from '../dto/body-health-info.dto';
+import { Types } from 'mongoose';
 
 @Schema({ timestamps: true })
 export class BodyHealthInfoDocument extends AbstractDocument {
   @Prop({ required: true })
-  memberId: string;
+  memberId: Types.ObjectId;
 
-  @Prop({ type: Object })
-  BodyInfo: BodyInfo;
+  @Prop({ type: BodyInfoDto })
+  BodyInfo: BodyInfoDto;
 
-  @Prop({ type: Object })
-  HealthInfo: HealthInfo;
+  @Prop({ type: HealthInfoDto })
+  HealthInfo: HealthInfoDto;
 
   @Prop({ length: 500 })
   note: string;
