@@ -29,7 +29,7 @@ export class AuthController {
   async signup(@Body() body: SignupRequestDto) {
     // Get user by email if exists
     const existingUser = await this.userService.getUserByEmail(body.email);
-
+    console.log('v1');
     if (existingUser) {
       this.logger.error(`User already exists with email ${body.email}`);
       throw new BadRequestException('User already exists');
