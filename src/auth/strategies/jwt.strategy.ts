@@ -19,6 +19,10 @@ export class JwtAuthGuard extends PassportStrategy(Strategy) {
       jwtFromRequest: ExtractJwt.fromExtractors([
         (request: Request) => {
           const jwtToken = request?.headers?.authorization?.split(' ')[1];
+          console.log(
+            '🚀 ~ file: jwt.strategy.ts:22 ~ JwtAuthGuard ~ classJwtAuthGuardextendsPassportStrategy ~ jwtToken:',
+            jwtToken,
+          );
 
           if (jwtToken) {
             this.logger.error('jwtToken is not found in the request header');

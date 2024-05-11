@@ -13,6 +13,7 @@ import * as Joi from 'joi';
         JWT_SECRET: Joi.string().required(),
         MONGODB_URI: Joi.string().required(),
         JWT_EXPIRES_IN: Joi.number().required(),
+        CLERK_SECRET_KEY: Joi.string().required(),
       }),
     }),
   ],

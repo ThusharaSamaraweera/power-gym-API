@@ -7,12 +7,14 @@ import { JwtService } from '@nestjs/jwt';
 import { UserDto } from 'src/common/dto/user.dto';
 import { LoginResponse } from './types';
 import { UserDocument } from 'src/user/modal';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly userRepository: UserRepository,
     private readonly jwtService: JwtService,
+    private readonly configService: ConfigService,
   ) {}
 
   async signup(logger: Logger, body: SignupRequestDto): Promise<UserDocument> {
@@ -51,6 +53,7 @@ export class AuthService {
     };
 
     delete user.password;
+
     return {
       user,
       accessToken: await this.generateJWT(logger, jwtPayload),

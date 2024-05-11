@@ -13,6 +13,7 @@ import { UserController } from './user.controller';
 import { BodyHealthInfoRepository } from './repository/body-health-info.repository';
 import { BodyHealthInfoService } from './bodyHealthInfo.service';
 import { LoggerModule } from 'src/common';
+import { AuthModule } from 'src/auth/auth.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { LoggerModule } from 'src/common';
       { name: UserDocument.name, schema: UserSchema },
       { name: BodyHealthInfoDocument.name, schema: BodyHealthInfoSchema },
     ]),
+    AuthModule,
   ],
   providers: [
     UserService,
