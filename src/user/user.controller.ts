@@ -6,11 +6,11 @@ import {
   Post,
   Query,
 } from '@nestjs/common';
-import { CreateBodyHealthInfoDto } from './dto/create-body-health-info.dto';
+import { CreateBodyHealthInfoDto } from './dto/create-body-health-info-dto';
 import { Types } from 'mongoose';
 import { BodyHealthInfoService } from './bodyHealthInfo.service';
 import { ApiTags } from '@nestjs/swagger';
-import { CreateUserRequestDto } from './dto/create-user-request.dto';
+import { CreateUserRequestDto } from './dto/create-user-request-dto';
 import { UserService } from './user.service';
 import { ServiceLogger } from 'src/common';
 

@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { UserRepository } from './repository/user.repository';
 import { Types } from 'mongoose';
-import { CreateUserRequestDto } from './dto/create-user-request.dto';
+import { CreateUserRequestDto } from './dto/create-user-request-dto';
 import { UserStatus } from 'src/common';
 
 @Injectable()

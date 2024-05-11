@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { AbstractDocument } from 'src/common/database/mongodb';
-import { BodyInfoDto, HealthInfoDto } from '../dto/body-health-info.dto';
+import { BodyInfoDto, HealthInfoDto } from '../dto/body-health-info-dto';
 import { Types } from 'mongoose';
 
 @Schema({ timestamps: true })

@@ -1,10 +1,10 @@
 import { Injectable, Logger } from '@nestjs/common';
 import * as bcrypt from 'bcryptjs';
-import { SignupRequestDto } from './dto/signup-request.dto';
+import { SignupRequestDto } from './dto/signup-request-dto';
 import { IJwtToken, UserStatus } from 'src/common';
 import { UserRepository } from '../user/repository/user.repository';
 import { JwtService } from '@nestjs/jwt';
-import { UserDto } from 'src/common/dto/user.dto';
+import { UserDto } from 'src/common/dto/user-dto';
 import { LoginResponse } from './types';
 import { UserDocument } from 'src/user/modal';
 
