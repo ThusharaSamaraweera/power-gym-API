@@ -24,41 +24,41 @@ export class AuthService {
 
     return await this.userRepository.create({
       ...body,
-      password: await bcrypt.hash(body.password, 10),
       status: UserStatus.ACTIVE,
       dateOfBirth: new Date(body.dateOfBirth).toISOString(),
       packageStartDate: isFreePackage ? new Date().toISOString() : null,
+      clerkUserId: body.clerkUserId,
     });
   }
 
-  async login(
-    logger: Logger,
-    email: string,
-    password: string,
-    user: UserDto,
-  ): Promise<LoginResponse> {
-    logger.log(`Login service called with email ${email}`);
+  // async login(
+  //   logger: Logger,
+  //   email: string,
+  //   password: string,
+  //   user: UserDto,
+  // ): Promise<LoginResponse> {
+  //   logger.log(`Login service called with email ${email}`);
 
-    const isValidPassword = bcrypt.compareSync(password, user.password);
+  //   // const isValidPassword = bcrypt.compareSync(password, user.password);
 
-    if (!isValidPassword) {
-      logger.error(`Invalid credentials for email ${email}`);
-      throw new Error('Invalid credentials');
-    }
+  //   // if (!isValidPassword) {
+  //   //   logger.error(`Invalid credentials for email ${email}`);
+  //   //   throw new Error('Invalid credentials');
+  //   // }
 
-    const jwtPayload: IJwtToken = {
-      id: user._id,
-      email: user.email,
-      userRole: user.role,
-    };
+  //   const jwtPayload: IJwtToken = {
+  //     id: user._id,
+  //     email: user.email,
+  //     userRole: user.role,
+  //   };
 
-    delete user.password;
+  //   // delete user.password;
 
-    return {
-      user,
-      accessToken: await this.generateJWT(logger, jwtPayload),
-    };
-  }
+  //   return {
+  //     user,
+  //     accessToken: await this.generateJWT(logger, jwtPayload),
+  //   };
+  // }
 
   async generateJWT(logger: Logger, { id, email, userRole }: IJwtToken) {
     logger.log('generateJWT service called');

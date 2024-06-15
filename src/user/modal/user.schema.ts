@@ -8,8 +8,8 @@ export class UserDocument extends AbstractDocument {
   @Prop({ unique: true })
   email: string;
 
-  @Prop({ required: true })
-  password: string;
+  // @Prop({ required: true })
+  // password: string;
 
   @Prop({ required: true })
   name: string;
@@ -50,6 +50,11 @@ export class UserDocument extends AbstractDocument {
     default: null,
   })
   packageStartDate?: string | null;
+
+  @Prop({
+    required: true,
+  })
+  clerkUserId: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(UserDocument);
