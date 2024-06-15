@@ -52,6 +52,6 @@ export class UserController {
   // @UseGuards(JwtAuthGuard)
   @Get('')
   async getAllUsers() {
-    return await this.userService.getAllUsers(this.logger);
+    return await this.userService.getAllUsersFromDb(this.logger);
   }
 }

@@ -44,7 +44,7 @@ export abstract class AbstractRepository<TDocument extends AbstractDocument> {
     return document;
   }
 
-  async find(filterQuery: FilterQuery<TDocument>) {
+  async find(filterQuery?: FilterQuery<TDocument>) {
     return this.model.find(filterQuery, {}, { lean: true });
   }
 

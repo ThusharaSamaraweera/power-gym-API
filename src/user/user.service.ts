@@ -41,8 +41,8 @@ export class UserService {
       return await this.userRepository.create({
         ...newUser,
         dateOfBirth: newUser.dateOfBirth,
-        password: this.generateRandomPassword(12),
         status: UserStatus.ACTIVE,
+        clerkUserId: newUser.clerkUserId,
       });
     } catch (error) {
       logger.error(`createUser: ${newUser?.email} error: ${error}`);
@@ -61,8 +61,8 @@ export class UserService {
     return password;
   }
 
-  async getAllUsers(logger: Logger) {
-    logger.log('getAllUsers');
+  async getAllUsersFromClerk(logger: Logger) {
+    logger.log('getAllUsersFromClerk');
     const clerkClient = Clerk({
       secretKey: this.configService.get<string>('CLERK_SECRET_KEY'),
     });
@@ -70,5 +70,10 @@ export class UserService {
     const userList = await clerkClient.users.getUserList();
 
     return userList;
+  }
+
+  async getAllUsersFromDb(logger: Logger) {
+    logger.log('getAllUsersFromDb called');
+    return this.userRepository.find();
   }
 }

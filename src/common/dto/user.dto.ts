@@ -13,9 +13,9 @@ export class UserDto {
   @ApiProperty()
   email: string;
 
-  @ApiProperty()
-  @IsOptional()
-  password: string;
+  // @ApiProperty()
+  // @IsOptional()
+  // password: string;
 
   @ApiProperty()
   name: string;
