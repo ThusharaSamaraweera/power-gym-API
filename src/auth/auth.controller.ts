@@ -38,22 +38,22 @@ export class AuthController {
     return this.authService.signup(this.logger, body);
   }
 
-  @ApiCreatedResponse({ type: LoginResponseDto })
-  @Post('login')
-  async login(@Body() body: LoginRequestDto) {
-    const existingUser: UserDocument = await this.userService.getUserByEmail(
-      body.email,
-    );
+  // @ApiCreatedResponse({ type: LoginResponseDto })
+  // @Post('login')
+  // async login(@Body() body: LoginRequestDto) {
+  //   const existingUser: UserDocument = await this.userService.getUserByEmail(
+  //     body.email,
+  //   );
 
-    if (!existingUser || !existingUser._id) {
-      this.logger.error(`User not found with email ${body.email}`);
-      throw new BadRequestException('Invalid credentials');
-    }
-    return await this.authService.login(
-      this.logger,
-      body.email,
-      body.password,
-      existingUser,
-    );
-  }
+  //   if (!existingUser || !existingUser._id) {
+  //     this.logger.error(`User not found with email ${body.email}`);
+  //     throw new BadRequestException('Invalid credentials');
+  //   }
+  //   return await this.authService.login(
+  //     this.logger,
+  //     body.email,
+  //     body.password,
+  //     existingUser,
+  //   );
+  // }
 }
