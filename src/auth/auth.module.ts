@@ -3,10 +3,11 @@ import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { DatabaseModule } from 'src/common/database/mongodb';
 import { UserDocument, UserSchema } from 'src/user/modal';
-import { UserRepository } from 'src/user/repository';
+import { UserRepository } from '../user/repository/user.repository';
 import { UserService } from 'src/user/user.service';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+
 @Module({
   imports: [
     DatabaseModule.forfeature([

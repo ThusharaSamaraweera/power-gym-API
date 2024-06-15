@@ -7,12 +7,12 @@ import {
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { UserService } from 'src/user/user.service';
-import { SignupRequestDto } from './dto/signup-request.dto';
+import { SignupRequestDto } from './dto/signup-request-dto';
 import { UserDocument } from 'src/user/modal';
-import { LoginRequestDto } from './dto/login-request.dto';
+import { LoginRequestDto } from './dto/login-request-dto';
 import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
-import { SignupResponseDto } from './dto/signup-response.dto';
-import { LoginResponseDto } from './dto/login-response.dto';
+import { SignupResponseDto } from './dto/signup-response-dto';
+import { LoginResponseDto } from './dto/login-response-dto';
 import { ServiceLogger } from 'src/common';
 
 @ApiTags('Auth')
@@ -29,7 +29,7 @@ export class AuthController {
   async signup(@Body() body: SignupRequestDto) {
     // Get user by email if exists
     const existingUser = await this.userService.getUserByEmail(body.email);
-
+    console.log('v1');
     if (existingUser) {
       this.logger.error(`User already exists with email ${body.email}`);
       throw new BadRequestException('User already exists');
