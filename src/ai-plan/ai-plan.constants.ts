@@ -1,5 +1,4 @@
-export const API_KEY = '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';
-export const API_URL = 'https://api.openai.com/v1/chat/completions';
+export const GPT4_API_URL = 'https://api.openai.com/v1/chat/completions';
 
 export const DIETARY_RESTRICTIONS = [
   'Vegetarian',
