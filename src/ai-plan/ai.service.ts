@@ -44,7 +44,7 @@ export class AiPlanService {
           ],
           ...
       }`;
-    this.logger.log(prompt);
+    this.logger.log(`Request body: ${JSON.stringify(prompt)}`);
     const secretKey = this.configService.get<string>('GPT4_API_KEY');
 
     try {
