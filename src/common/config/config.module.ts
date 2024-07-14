@@ -14,6 +14,7 @@ import * as Joi from 'joi';
         MONGODB_URI: Joi.string().required(),
         JWT_EXPIRES_IN: Joi.number().required(),
         GPT4_API_KEY: Joi.string().required(),
+        CLERK_SECRET_KEY: Joi.string().required(),
       }),
     }),
   ],

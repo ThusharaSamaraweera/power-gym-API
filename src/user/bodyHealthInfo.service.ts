@@ -1,5 +1,5 @@
 import { Types } from 'mongoose';
-import { CreateBodyHealthInfoDto } from './dto/create-body-health-info.dto';
+import { CreateBodyHealthInfoDto } from './dto/create-body-health-info-dto';
 import { Injectable } from '@nestjs/common';
 import { BodyHealthInfoRepository } from './repository/body-health-info.repository';
 

@@ -25,14 +25,6 @@ export class SignupRequestDto {
     required: true,
   })
   @IsString()
-  @MinLength(8)
-  @IsNotEmpty()
-  password: string;
-
-  @ApiProperty({
-    required: true,
-  })
-  @IsString()
   @MinLength(5)
   @IsNotEmpty()
   @MaxLength(20)
@@ -89,4 +81,11 @@ export class SignupRequestDto {
   // @IsEnum(PACKAGE_DURATION)
   // @IsOptional()
   // packageDuration: PACKAGE_DURATION;
+
+  @ApiProperty({
+    required: true,
+  })
+  @IsString()
+  @IsNotEmpty()
+  clerkUserId: string;
 }
