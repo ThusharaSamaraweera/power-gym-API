@@ -1,4 +1,4 @@
-import { HttpException, Body, Controller, Logger, Post } from '@nestjs/common';
+import { HttpException, Body, Controller, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { AiPlanService } from './ai.service';
 
