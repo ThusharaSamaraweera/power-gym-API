@@ -14,7 +14,7 @@ export class AiPlanService {
   }
 
   async generateWorkoutPlan(body: object) {
-    const prompt = `Based on the following user inputs, generate a structured gym workout plan in JSON format. Include exercises for each day and ensure the plan is comprehensive and detailed. The available exercises are listed below. Each exercise should have a name and frequency (e.g., "3 sets of 10 reps").
+    const prompt = `Based on the following user inputs, generate a structured gym workout plan in JSON format for a week. Include exercises for each day and ensure the plan is comprehensive and detailed. Include rest days. The available exercises are listed below. Each exercise should have a name and frequency (e.g., "3 sets of 10 reps").
 
       User Inputs: ${JSON.stringify(body, null, 2)}
 
@@ -25,25 +25,87 @@ export class AiPlanService {
           "Day 1": [
               {
                   "exercise": "Bench Press",
-                  "frequency": "3 sets of 10 reps"
+                  "frequency": {
+                      "sets": 3,
+                      "reps": 10
+                  }
               },
               {
                   "exercise": "Tricep Dips",
-                  "frequency": "3 sets of 15 reps"
+                  "frequency": {
+                      "sets": 3,
+                      "reps": 15
+                  }
               }
           ],
           "Day 2": [
               {
                   "exercise": "Pull-Ups",
-                  "frequency": "3 sets of 10 reps"
+                  "frequency": {
+                      "sets": 3,
+                      "reps": 10
+                  }
               },
               {
                   "exercise": "Bent-Over Barbell Rows",
-                  "frequency": "3 sets of 10 reps"
+                  "frequency": {
+                      "sets": 3,
+                      "reps": 10
+                  }
               }
           ],
-          ...
+          "Day 3": "Rest",
+          "Day 4": [
+              {
+                  "exercise": "Squats",
+                  "frequency": {
+                      "sets": 3,
+                      "reps": 12
+                  }
+              },
+              {
+                  "exercise": "Lunges",
+                  "frequency": {
+                      "sets": 3,
+                      "reps": 12
+                  }
+              }
+          ],
+          "Day 5": [
+              {
+                  "exercise": "Military Press",
+                  "frequency": {
+                      "sets": 3,
+                      "reps": 10
+                  }
+              },
+              {
+                  "exercise": "Dumbbell Lateral Raises",
+                  "frequency": {
+                      "sets": 3,
+                      "reps": 12
+                  }
+              }
+          ],
+          "Day 6": "Rest",
+          "Day 7": [
+              {
+                  "exercise": "Deadlifts",
+                  "frequency": {
+                      "sets": 3,
+                      "reps": 10
+                  }
+              },
+              {
+                  "exercise": "Seated Cable Rows",
+                  "frequency": {
+                      "sets": 3,
+                      "reps": 12
+                  }
+              }
+          ]
       }`;
+
     this.logger.log(`Request body: ${JSON.stringify(prompt)}`);
     const secretKey = this.configService.get<string>('GPT4_API_KEY');
 
