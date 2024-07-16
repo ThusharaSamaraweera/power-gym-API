@@ -23,7 +23,7 @@ export const ACTIVITY_LEVEL = [
   'Very active',
 ];
 
-export const EXERCISES = [
+export const STRENGTH_EXERCISES = [
   'Bench Press',
   'Incline Bench Press',
   'Decline Bench Press',
@@ -69,15 +69,18 @@ export const EXERCISES = [
   'Leg Raises',
   'Bicycle Crunches',
   'Mountain Climbers',
+  'Burpees',
+  'Kettlebell Swings',
+  'Clean and Press',
+  'Snatches',
+  "Farmer's Walk",
+];
+
+export const CARDIO_EXERCISES = [
   'Running (Treadmill)',
   'Cycling (Stationary Bike)',
   'Rowing Machine',
   'Jump Rope',
   'Elliptical Trainer',
   'Stair Climber',
-  'Burpees',
-  'Kettlebell Swings',
-  'Clean and Press',
-  'Snatches',
-  "Farmer's Walk",
 ];
