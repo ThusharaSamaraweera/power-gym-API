@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import { BodyInfoDto, HealthInfoDto } from './body-health-info.dto';
+import { BodyHealthInfoDto } from './body-health-info-dto';
 import {
   IsEmail,
   IsNotEmpty,
@@ -10,15 +10,19 @@ import {
 } from 'class-validator';
 
 export class CreateBodyHealthInfoDto {
-  @ApiProperty()
-  @Type(() => BodyInfoDto)
-  @IsNotEmpty()
-  bodyInfo: BodyInfoDto;
+  // @ApiProperty()
+  // @Type(() => BodyInfoDto)
+  // @IsNotEmpty()
+  // bodyInfo: BodyInfoDto;
+
+  // @ApiProperty()
+  // @Type(() => HealthInfoDto)
+  // @IsNotEmpty()
+  // healthInfo: HealthInfoDto;
 
   @ApiProperty()
-  @Type(() => HealthInfoDto)
   @IsNotEmpty()
-  healthInfo: HealthInfoDto;
+  bodyHealthInfo: BodyHealthInfoDto;
 
   @ApiProperty()
   @IsString()

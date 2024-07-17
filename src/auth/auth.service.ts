@@ -1,18 +1,19 @@
 import { Injectable, Logger } from '@nestjs/common';
 import * as bcrypt from 'bcryptjs';
-import { SignupRequestDto } from './dto/signup-request.dto';
+import { SignupRequestDto } from './dto/signup-request-dto';
 import { IJwtToken, UserStatus } from 'src/common';
-import { UserRepository } from 'src/user/repository';
-import { JwtService } from '@nestjs/jwt';
-import { UserDto } from 'src/common/dto/user.dto';
+import { UserRepository } from '../user/repository/user.repository';
+import { UserDto } from 'src/common/dto/user-dto';
 import { LoginResponse } from './types';
 import { UserDocument } from 'src/user/modal';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly userRepository: UserRepository,
-    private readonly jwtService: JwtService,
+    // private readonly jwtService: JwtService,
+    private readonly configService: ConfigService,
   ) {}
 
   async signup(logger: Logger, body: SignupRequestDto): Promise<UserDocument> {
@@ -22,43 +23,44 @@ export class AuthService {
 
     return await this.userRepository.create({
       ...body,
-      password: await bcrypt.hash(body.password, 10),
       status: UserStatus.ACTIVE,
       dateOfBirth: new Date(body.dateOfBirth).toISOString(),
       packageStartDate: isFreePackage ? new Date().toISOString() : null,
+      clerkUserId: body.clerkUserId,
     });
   }
 
-  async login(
-    logger: Logger,
-    email: string,
-    password: string,
-    user: UserDto,
-  ): Promise<LoginResponse> {
-    logger.log(`Login service called with email ${email}`);
+  // async login(
+  //   logger: Logger,
+  //   email: string,
+  //   password: string,
+  //   user: UserDto,
+  // ): Promise<LoginResponse> {
+  //   logger.log(`Login service called with email ${email}`);
 
-    const isValidPassword = bcrypt.compareSync(password, user.password);
+  //   // const isValidPassword = bcrypt.compareSync(password, user.password);
 
-    if (!isValidPassword) {
-      logger.error(`Invalid credentials for email ${email}`);
-      throw new Error('Invalid credentials');
-    }
+  //   // if (!isValidPassword) {
+  //   //   logger.error(`Invalid credentials for email ${email}`);
+  //   //   throw new Error('Invalid credentials');
+  //   // }
 
-    const jwtPayload: IJwtToken = {
-      id: user._id,
-      email: user.email,
-      userRole: user.role,
-    };
+  //   const jwtPayload: IJwtToken = {
+  //     id: user._id,
+  //     email: user.email,
+  //     userRole: user.role,
+  //   };
 
-    delete user.password;
-    return {
-      user,
-      accessToken: await this.generateJWT(logger, jwtPayload),
-    };
-  }
+  //   // delete user.password;
 
-  async generateJWT(logger: Logger, { id, email, userRole }: IJwtToken) {
-    logger.log('generateJWT service called');
-    return this.jwtService.signAsync({ id, email, userRole });
-  }
+  //   return {
+  //     user,
+  //     accessToken: await this.generateJWT(logger, jwtPayload),
+  //   };
+  // }
+
+  // async generateJWT(logger: Logger, { id, email, userRole }: IJwtToken) {
+  //   logger.log('generateJWT service called');
+  //   return this.jwtService.signAsync({ id, email, userRole });
+  // }
 }

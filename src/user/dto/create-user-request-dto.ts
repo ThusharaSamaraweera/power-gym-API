@@ -52,4 +52,11 @@ export class CreateUserRequestDto {
   @IsString()
   @IsNotEmpty()
   phone: string;
+
+  @ApiProperty({
+    required: true,
+  })
+  @IsString()
+  @IsNotEmpty()
+  clerkUserId: string;
 }

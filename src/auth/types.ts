@@ -1,4 +1,4 @@
-import { UserDto } from 'src/common/dto/user.dto';
+import { UserDto } from 'src/common/dto/user-dto';
 
 export interface LoginResponse {
   user: UserDto;

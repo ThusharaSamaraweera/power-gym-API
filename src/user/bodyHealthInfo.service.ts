@@ -1,5 +1,5 @@
 import { Types } from 'mongoose';
-import { CreateBodyHealthInfoDto } from './dto/create-body-health-info.dto';
+import { CreateBodyHealthInfoDto } from './dto/create-body-health-info-dto';
 import { Injectable } from '@nestjs/common';
 import { BodyHealthInfoRepository } from './repository/body-health-info.repository';
 
@@ -15,10 +15,9 @@ export class BodyHealthInfoService {
   ) {
     return await this.bodyHealthInfoRepository.create({
       memberId: memberId,
-      BodyInfo: bodyHealthInfo.bodyInfo,
-      HealthInfo: bodyHealthInfo.healthInfo,
-      note: bodyHealthInfo.note,
-      verifiedBy: bodyHealthInfo.verifiedBy,
+      bodyHealthInfo: bodyHealthInfo.bodyHealthInfo,
+      note: bodyHealthInfo?.note,
+      verifiedBy: bodyHealthInfo?.verifiedBy,
     });
   }
 }
