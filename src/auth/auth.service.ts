@@ -3,7 +3,6 @@ import * as bcrypt from 'bcryptjs';
 import { SignupRequestDto } from './dto/signup-request-dto';
 import { IJwtToken, UserStatus } from 'src/common';
 import { UserRepository } from '../user/repository/user.repository';
-import { JwtService } from '@nestjs/jwt';
 import { UserDto } from 'src/common/dto/user-dto';
 import { LoginResponse } from './types';
 import { UserDocument } from 'src/user/modal';
@@ -13,7 +12,7 @@ import { ConfigService } from '@nestjs/config';
 export class AuthService {
   constructor(
     private readonly userRepository: UserRepository,
-    private readonly jwtService: JwtService,
+    // private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
   ) {}
 
@@ -60,8 +59,8 @@ export class AuthService {
   //   };
   // }
 
-  async generateJWT(logger: Logger, { id, email, userRole }: IJwtToken) {
-    logger.log('generateJWT service called');
-    return this.jwtService.signAsync({ id, email, userRole });
-  }
+  // async generateJWT(logger: Logger, { id, email, userRole }: IJwtToken) {
+  //   logger.log('generateJWT service called');
+  //   return this.jwtService.signAsync({ id, email, userRole });
+  // }
 }
