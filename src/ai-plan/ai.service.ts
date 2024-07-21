@@ -18,7 +18,7 @@ export class AiPlanService {
   }
 
   async generateWorkoutPlan(body: object) {
-    const prompt = `Based on the following user inputs, generate a structured gym workout plan in JSON format. The plan should cover 7 days. Include exercises for each day and ensure the plan is comprehensive and detailed. Include rest days. Ensure each workout day includes at least one cardio exercise. The available exercises are listed below. Each exercise should have a name and frequency. For strength exercises, use "sets" and "reps" (e.g., { "sets": 3, "reps": 15 }). For cardio exercises like Cycling (Stationary Bike) and Running (Treadmill), use "duration" (e.g., { "duration": "30 minutes" }).
+    const prompt = `Based on the following user inputs, generate a structured gym workout plan in JSON format. The plan should cover 7 days named Monday through Sunday. Include exercises for each day and ensure the plan is comprehensive and detailed. Include rest days. Ensure workout days includes cardio exercise if necessary based on user inputs. Cardio exercises should include duration instead of sets and reps. The available exercises are listed below. Each exercise should have a name and frequency. For strength exercises, use "sets" and "reps" (e.g., { "sets": 3, "reps": 15 }). For cardio exercises like Cycling (Stationary Bike) and Running (Treadmill), use "duration" (e.g., { "duration": "30 minutes" }).
 
       User Inputs: ${JSON.stringify(body, null, 2)}
 
@@ -27,119 +27,141 @@ export class AiPlanService {
 
       Response Format:
       {
+          "period": "50 days", // Period need to follow this workout plan
           "plan": {
-              "Day 1": [
-                  {
-                      "exercise": "Bench Press",
-                      "frequency": {
-                          "sets": 3,
-                          "reps": 10
+              "Monday": {
+                  "isRest": false,
+                  "exercises": [
+                      {
+                          "exercise": "Bench Press",
+                          "frequency": {
+                              "sets": 3,
+                              "reps": 10
+                          }
+                      },
+                      {
+                          "exercise": "Tricep Dips",
+                          "frequency": {
+                              "sets": 3,
+                              "reps": 15
+                          }
+                      },
+                      {
+                          "exercise": "Running (Treadmill)",
+                          "frequency": {
+                              "duration": "30 minutes"
+                          }
                       }
-                  },
-                  {
-                      "exercise": "Tricep Dips",
-                      "frequency": {
-                          "sets": 3,
-                          "reps": 15
+                  ]
+              },
+              "Tuesday": {
+                  "isRest": false,
+                  "exercises": [
+                      {
+                          "exercise": "Pull-Ups",
+                          "frequency": {
+                              "sets": 3,
+                              "reps": 10
+                          }
+                      },
+                      {
+                          "exercise": "Bent-Over Barbell Rows",
+                          "frequency": {
+                              "sets": 3,
+                              "reps": 10
+                          }
+                      },
+                      {
+                          "exercise": "Cycling (Stationary Bike)",
+                          "frequency": {
+                              "duration": "30 minutes"
+                          }
                       }
-                  },
-                  {
-                      "exercise": "Running (Treadmill)",
-                      "frequency": {
-                          "duration": "30 minutes"
+                  ]
+              },
+              "Wednesday": {
+                  "isRest": true,
+                  "exercises": []
+              },
+              "Thursday": {
+                  "isRest": false,
+                  "exercises": [
+                      {
+                          "exercise": "Squats",
+                          "frequency": {
+                              "sets": 3,
+                              "reps": 12
+                          }
+                      },
+                      {
+                          "exercise": "Lunges",
+                          "frequency": {
+                              "sets": 3,
+                              "reps": 12
+                          }
+                      },
+                      {
+                          "exercise": "Rowing Machine",
+                          "frequency": {
+                              "duration": "30 minutes"
+                          }
                       }
-                  }
-              ],
-              "Day 2": [
-                  {
-                      "exercise": "Pull-Ups",
-                      "frequency": {
-                          "sets": 3,
-                          "reps": 10
+                  ]
+              },
+              "Friday": {
+                  "isRest": false,
+                  "exercises": [
+                      {
+                          "exercise": "Military Press",
+                          "frequency": {
+                              "sets": 3,
+                              "reps": 10
+                          }
+                      },
+                      {
+                          "exercise": "Dumbbell Lateral Raises",
+                          "frequency": {
+                              "sets": 3,
+                              "reps": 12
+                          }
+                      },
+                      {
+                          "exercise": "Elliptical Trainer",
+                          "frequency": {
+                              "duration": "30 minutes"
+                          }
                       }
-                  },
-                  {
-                      "exercise": "Bent-Over Barbell Rows",
-                      "frequency": {
-                          "sets": 3,
-                          "reps": 10
+                  ]
+              },
+              "Saturday": {
+                  "isRest": true,
+                  "exercises": []
+              },
+              "Sunday": {
+                  "isRest": false,
+                  "exercises": [
+                      {
+                          "exercise": "Deadlifts",
+                          "frequency": {
+                              "sets": 3,
+                              "reps": 10
+                          }
+                      },
+                      {
+                          "exercise": "Seated Cable Rows",
+                          "frequency": {
+                              "sets": 3,
+                              "reps": 12
+                          }
+                      },
+                      {
+                          "exercise": "Jump Rope",
+                          "frequency": {
+                              "duration": "15 minutes"
+                          }
                       }
-                  },
-                  {
-                      "exercise": "Cycling (Stationary Bike)",
-                      "frequency": {
-                          "duration": "30 minutes"
-                      }
-                  }
-              ],
-              "Day 3": "Rest",
-              "Day 4": [
-                  {
-                      "exercise": "Squats",
-                      "frequency": {
-                          "sets": 3,
-                          "reps": 12
-                      }
-                  },
-                  {
-                      "exercise": "Lunges",
-                      "frequency": {
-                          "sets": 3,
-                          "reps": 12
-                      }
-                  },
-                  {
-                      "exercise": "Rowing Machine",
-                      "frequency": {
-                          "duration": "30 minutes"
-                      }
-                  }
-              ],
-              "Day 5": [
-                  {
-                      "exercise": "Military Press",
-                      "frequency": {
-                          "sets": 3,
-                          "reps": 10
-                      }
-                  },
-                  {
-                      "exercise": "Dumbbell Lateral Raises",
-                      "frequency": {
-                          "sets": 3,
-                          "reps": 12
-                      }
-                  },
-                  {
-                      "exercise": "Elliptical Trainer",
-                      "frequency": {
-                          "duration": "30 minutes"
-                      }
-                  }
-              ],
-              "Day 6": "Rest",
-              "Day 7": [
-                  {
-                      "exercise": "Deadlifts",
-                      "frequency": {
-                          "sets": 3,
-                          "reps": 10
-                      }
-                  },
-                  {
-                      "exercise": "Seated Cable Rows",
-                      "frequency": {
-                          "sets": 3,
-                          "reps": 12
-                      }
-                  },
-                  {
-                      "exercise": "Jump Rope",
-                      "frequency": {
-                          "duration": "15 minutes"
-                      }
-                  }
-              ]
+                  ]
+              }
           }
       }
       Return only the JSON format.`;
