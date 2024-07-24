@@ -18,7 +18,7 @@ export class AiPlanService {
   }
 
   async generateWorkoutPlan(body: object) {
-    const prompt = `Based on the following user inputs, generate a structured gym workout plan in JSON format. The plan should cover 7 days named Monday through Sunday. Include exercises for each day and ensure the plan is comprehensive and detailed. Include rest days. Ensure workout days includes cardio exercise if necessary based on user inputs. Cardio exercises should include duration instead of sets and reps. The available exercises are listed below. Each exercise should have a name and frequency. For strength exercises, use "sets" and "reps" (e.g., { "sets": 3, "reps": 15 }). For cardio exercises like Cycling (Stationary Bike) and Running (Treadmill), use "duration" (e.g., { "duration": "30 minutes" }).
+    const prompt = `Based on the following user inputs, generate a structured gym workout plan in JSON format. The plan should cover 7 days named Monday through Sunday. Include exercises for each day and ensure the plan is comprehensive and detailed. Include rest days. Ensure workout days include cardio exercises if necessary based on user inputs. Cardio exercises should include duration instead of sets and reps. The available exercises are listed below. Each exercise should have a name and frequency. For strength exercises, use "sets" and "reps" (e.g., { "sets": 3, "reps": 15 }). For cardio exercises like Cycling (Stationary Bike) and Running (Treadmill), use "duration" (e.g., { "duration": "30 minutes" }).
 
       User Inputs: ${JSON.stringify(body, null, 2)}
 
@@ -27,7 +27,7 @@ export class AiPlanService {
 
       Response Format:
       {
-          "period": "50 days", // Period need to follow this workout plan
+          "duration": "50 days", // Duration to follow this workout plan (20 days, 30 days, 50 days etc.)
           "plan": {
               "Monday": {
                   "isRest": false,

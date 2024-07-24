@@ -22,3 +22,8 @@ export enum PACKAGE_TYPE {
 //   SIX_MONTHS = 'SIX_MONTHS',
 //   ANNUAL = 'ANNUAL',
 // }
+
+export enum BODY_HEALTH_INFO_RECORD_STATUS {
+  PENDING = 'PENDING',
+  COMPLETED = 'COMPLETED',
+}

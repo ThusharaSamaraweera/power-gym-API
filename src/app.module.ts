@@ -5,6 +5,7 @@ import { LoggerModule } from './common';
 import { ConfigModule } from './common/config/config.module';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
+import { TrainerModule } from './trainer/trainer.module';
 import { DatabaseModule } from './common/database/mongodb';
 import { ConfigService } from '@nestjs/config';
 import { AiPlanModule } from './ai-plan/modal/ai-plan.module';
@@ -17,6 +18,7 @@ import { AiPlanModule } from './ai-plan/modal/ai-plan.module';
     UserModule,
     DatabaseModule,
     AiPlanModule,
+    TrainerModule,
   ],
   controllers: [AppController],
   providers: [AppService, ConfigService],

@@ -2,6 +2,7 @@ import { Types } from 'mongoose';
 import { CreateBodyHealthInfoDto } from './dto/create-body-health-info-dto';
 import { Injectable } from '@nestjs/common';
 import { BodyHealthInfoRepository } from './repository/body-health-info.repository';
+import { BODY_HEALTH_INFO_RECORD_STATUS } from './types';
 
 @Injectable()
 export class BodyHealthInfoService {
@@ -19,6 +20,9 @@ export class BodyHealthInfoService {
       HealthInfo: bodyHealthInfo.healthInfo,
       note: bodyHealthInfo.note,
       verifiedBy: bodyHealthInfo.verifiedBy,
+      status: BODY_HEALTH_INFO_RECORD_STATUS.PENDING,
+      trainerId: bodyHealthInfo.trainerId,
+      WorkoutPlan: bodyHealthInfo.workoutPlan,
     });
   }
 }

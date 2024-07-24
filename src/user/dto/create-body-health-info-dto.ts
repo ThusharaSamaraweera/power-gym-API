@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { BodyInfoDto, HealthInfoDto } from './body-health-info-dto';
+import { WorkoutPlanDto } from 'src/ai-plan/dto/ai-plan.dto';
 import {
   IsEmail,
   IsNotEmpty,
@@ -17,7 +18,6 @@ export class CreateBodyHealthInfoDto {
 
   @ApiProperty()
   @Type(() => HealthInfoDto)
-  @IsNotEmpty()
   healthInfo: HealthInfoDto;
 
   @ApiProperty()
@@ -25,6 +25,11 @@ export class CreateBodyHealthInfoDto {
   @MaxLength(500)
   @IsOptional()
   note: string;
+
+  @ApiProperty()
+  @Type(() => WorkoutPlanDto)
+  @IsOptional()
+  workoutPlan: WorkoutPlanDto;
 
   @ApiProperty({
     type: String,
@@ -34,4 +39,9 @@ export class CreateBodyHealthInfoDto {
   @IsEmail()
   @IsNotEmpty()
   verifiedBy: string;
+
+  @ApiProperty()
+  @IsString()
+  @IsNotEmpty()
+  trainerId: string;
 }
