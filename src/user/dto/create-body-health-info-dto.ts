@@ -52,6 +52,6 @@ export class CreateBodyHealthInfoDto {
 
   @ApiProperty()
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   status: string;
 }

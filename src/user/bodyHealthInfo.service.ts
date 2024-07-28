@@ -19,9 +19,9 @@ export class BodyHealthInfoService {
       bodyHealthInfo: bodyHealthInfo.bodyHealthInfo,
       note: bodyHealthInfo?.note,
       verifiedBy: bodyHealthInfo?.verifiedBy,
-      status: BODY_HEALTH_INFO_RECORD_STATUS.PENDING,
+      status: bodyHealthInfo?.status || BODY_HEALTH_INFO_RECORD_STATUS.PENDING,
       trainerId: bodyHealthInfo.trainerId,
-      WorkoutPlan: bodyHealthInfo.workoutPlan,
+      WorkoutPlan: bodyHealthInfo?.workoutPlan,
     });
   }
 }

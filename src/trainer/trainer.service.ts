@@ -2,34 +2,59 @@ import { BODY_HEALTH_INFO_RECORD_STATUS } from './../user/types';
 import { Injectable, Logger } from '@nestjs/common';
 import { TrainerRepository } from './repository/trainer.repository';
 import { BodyHealthInfoRepository } from 'src/user/repository/body-health-info.repository';
+import { UserRepository } from 'src/user//repository/user.repository';
 import { Types } from 'mongoose';
 import { CreateTrainerRequestDto } from './dto/create-trainer-request-dto';
 import { UserStatus } from 'src/common';
 import { Clerk } from '@clerk/clerk-sdk-node';
 import { ConfigService } from '@nestjs/config';
 import { AiPlanService } from './../ai-plan/ai.service';
+import { UserRoles } from 'src/common';
+import { NotFoundException } from '@nestjs/common';
 
 @Injectable()
 export class TrainerService {
   constructor(
     private readonly trainerRepository: TrainerRepository,
     private readonly bodyHealthInfoRepository: BodyHealthInfoRepository,
+    private readonly userRepository: UserRepository,
     private configService: ConfigService,
     private aiPlanService: AiPlanService,
   ) {}
 
-  async getTrainerByEmail(email: string) {
-    return this.trainerRepository.findOne({ email });
+  async getTrainerByEmail(logger: Logger, email: string) {
+    logger.log(`getTrainerByEmail: ${email}`);
+    try {
+      const trainer = await this.userRepository.findOne({
+        email,
+        role: UserRoles.TRAINER,
+      });
+
+      if (!trainer || !trainer.email) {
+        logger.log(`Trainer with email ${email} not found`);
+        return null;
+      }
+
+      return trainer;
+    } catch (error) {
+      logger.error(
+        `getTrainerByEmail: ${email} error: ${JSON.stringify(error)}`,
+      );
+      throw error;
+    }
   }
 
   async getTrainerById(logger: Logger, _id: Types.ObjectId) {
     logger.log(`getTrainerById: ${_id}`);
     try {
-      const trainer = await this.trainerRepository.findOne({ _id });
+      const trainer = await this.userRepository.findOne({
+        _id,
+        role: UserRoles.TRAINER,
+      });
 
       if (!trainer || !trainer._id) {
         logger.log(`Trainer with id ${_id} not found`);
-        return null;
+        throw new NotFoundException(`Trainer with id ${_id} not found`);
       }
 
       return trainer;
@@ -43,11 +68,12 @@ export class TrainerService {
     logger.log(`Create trainer: ${JSON.stringify(newTrainer)}`);
 
     try {
-      return await this.trainerRepository.create({
+      return await this.userRepository.create({
         ...newTrainer,
         dateOfBirth: newTrainer.dateOfBirth,
         status: UserStatus.ACTIVE,
         clerkUserId: newTrainer.clerkUserId,
+        role: UserRoles.TRAINER,
       });
     } catch (error) {
       logger.error(
@@ -81,7 +107,9 @@ export class TrainerService {
 
   async getAllTrainersFromDb(logger: Logger) {
     logger.log('getAllTrainersFromDb called');
-    return this.trainerRepository.find();
+    return this.userRepository.find({
+      role: UserRoles.TRAINER,
+    });
   }
 
   async generateAiExercisePlan(
@@ -99,11 +127,13 @@ export class TrainerService {
         logger.log(
           `bodyHealthInfo with object id ${bodyHealthInfoId} not found`,
         );
-        return null;
+        throw new NotFoundException(
+          `bodyHealthInfo with object id ${bodyHealthInfoId} not found`,
+        );
       }
 
       const workoutPlan = await this.aiPlanService.generateWorkoutPlan(
-        bodyHealthInfo,
+        bodyHealthInfo.bodyHealthInfo,
       );
       logger.log(`Generated workout plan: ${JSON.stringify(workoutPlan)}`);
 

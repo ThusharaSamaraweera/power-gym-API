@@ -24,6 +24,7 @@ export class TrainerController {
   @Post('/')
   async createTrainer(@Body() payload: CreateTrainerRequestDto) {
     const existingTrainer = await this.trainerService.getTrainerByEmail(
+      this.logger,
       payload.email,
     );
 
@@ -37,7 +38,6 @@ export class TrainerController {
     return this.trainerService.createTrainer(this.logger, payload);
   }
 
-  // @UseGuards(JwtAuthGuard)
   @Get('')
   async getAllTrainers() {
     return await this.trainerService.getAllTrainersFromDb(this.logger);

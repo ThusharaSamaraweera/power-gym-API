@@ -43,6 +43,7 @@
 
 export class BodyHealthInfoDto {
   anthropometricMeasurements: {
+    age: number;
     weight: number;
     height: number;
     waistCircumference: number;
