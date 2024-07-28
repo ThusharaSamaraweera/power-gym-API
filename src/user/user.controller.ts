@@ -5,9 +5,9 @@ import {
   Get,
   Logger,
   Post,
-  Query,
+  // Query,
   Param,
-  UseGuards,
+  // UseGuards,
 } from '@nestjs/common';
 import { CreateBodyHealthInfoDto } from './dto/create-body-health-info-dto';
 import { Types } from 'mongoose';

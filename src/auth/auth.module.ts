@@ -6,7 +6,10 @@ import { UserDocument, UserSchema } from 'src/user/modal';
 import { UserRepository } from '../user/repository/user.repository';
 import { UserService } from 'src/user/user.service';
 // import { JwtModule } from '@nestjs/jwt';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import {
+  ConfigModule,
+  // ConfigService
+} from '@nestjs/config';
 
 @Module({
   imports: [

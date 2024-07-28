@@ -7,7 +7,7 @@ import {
   Post,
   Query,
   Param,
-  UseGuards,
+  // UseGuards,
 } from '@nestjs/common';
 import { Types } from 'mongoose';
 import { ApiTags } from '@nestjs/swagger';
