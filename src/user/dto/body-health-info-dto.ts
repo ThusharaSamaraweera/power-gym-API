@@ -1,167 +1,94 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export class BodyInfoDto {
-  @ApiProperty({
-    type: Number,
-    required: true,
-  })
-  height: number;
+// export class BodyInfoDto {
+//   @ApiProperty({
+//     type: Number,
+//     required: true,
+//   })
+//   height: number;
 
-  @ApiProperty({
-    type: Number,
-    required: true,
-  })
-  weight: number;
+//   @ApiProperty({
+//     type: Number,
+//     required: true,
+//   })
+//   weight: number;
 
-  @ApiProperty({
-    type: Number,
-    required: false,
-  })
-  waistCircumference: number;
+//   @ApiProperty({
+//     type: Number,
+//     required: true,
+//     description: 'Body fat percentage',
+//   })
+//   fat: number;
 
-  @ApiProperty({
-    type: Number,
-    required: false,
-  })
-  hipCircumference: number;
+//   @ApiProperty({
+//     type: Number,
+//     required: false,
+//   })
+//   muscleMass?: number;
+// }
 
-  @ApiProperty({
-    type: Number,
-    required: false,
-  })
-  chestCircumference: number;
+// export class HealthInfoDto {
+//   @ApiProperty({
+//     type: Number,
+//     required: false,
+//   })
+//   bloodPressure: string;
 
-  @ApiProperty({
-    type: Number,
-    required: false,
-  })
-  armCircumference: number;
+//   @ApiProperty({
+//     type: Number,
+//     required: false,
+//   })
+//   heartRate: number;
+// }
 
-  @ApiProperty({
-    type: Number,
-    required: false,
-  })
-  thighCircumference: number;
-
-  @ApiProperty({
-    type: Number,
-    required: false,
-  })
-  abdomenCircumference: number;
-
-  @ApiProperty({
-    type: Number,
-    required: false,
-  })
-  tricepsCircumference: number;
-
-  @ApiProperty({
-    type: Number,
-    required: false,
-  })
-  supraIliacCircumference: number;
-
-  @ApiProperty({
-    type: Number,
-    required: false,
-  })
-  waistToHipRatio: number;
-
-  @ApiProperty({
-    type: Number,
-    required: false,
-  })
-  bodyMassIndex: number;
-
-  @ApiProperty({
-    type: Number,
-    required: false,
-  })
-  bodyDensity: number;
-
-  @ApiProperty({
-    type: Number,
-    required: false,
-  })
-  bodyFatPercentage: number;
-
-  @ApiProperty({
-    type: Number,
-    required: false,
-  })
-  sitAndReach: number;
-}
-
-export class HealthInfoDto {
-  @ApiProperty({
-    type: Number,
-    required: false,
-  })
-  restingHeartRate: number;
-
-  @ApiProperty({
-    type: Number,
-    required: false,
-  })
-  estimatedMaximumHeartRate: number;
-
-  @ApiProperty({
-    type: Number,
-    required: false,
-  })
-  maximumWeightLifted: number;
-
-  @ApiProperty({
-    type: Number,
-    required: false,
-  })
-  reps: number;
-
-  @ApiProperty({
-    type: Number,
-    required: false,
-  })
-  oneRepMax: number;
-
-  @ApiProperty({
-    type: Number,
-    required: false,
-  })
-  muscularEndurance: number;
-
-  @ApiProperty({
-    type: Number,
-    required: false,
-  })
-  cardiorespiratoryEndurance: number;
-
-  @ApiProperty({
-    type: [String],
-    required: false,
-  })
-  fitnessGoals: string[];
-
-  @ApiProperty({
-    type: [String],
-    required: false,
-  })
-  exercisePreferences: string[];
-
-  @ApiProperty({
-    type: [String],
-    required: false,
-  })
-  medicalHistory: string[];
-
-  @ApiProperty({
-    type: String,
-    required: false,
-  })
-  activityLevel: string;
-
-  @ApiProperty({
-    type: Number,
-    required: false,
-  })
-  sleepDuration: number;
+export class BodyHealthInfoDto {
+  anthropometricMeasurements: {
+    weight: number;
+    height: number;
+    waistCircumference: number;
+    hipCircumference: number;
+    chestCircumference: number;
+    armCircumference: number;
+    thighCircumference: number;
+    abdomenCircumference: number;
+    tricepsCircumference: number;
+    supraIliacCircumference: number;
+    waistToHipRatio: number;
+  };
+  bodyComposition: {
+    bodyMassIndex: number;
+    bodyDensity: number;
+    bodyFatPercentage: number;
+  };
+  cardiovascularFitness: {
+    restingHeartRate: number;
+    estimatedMaximumHeartRate: number;
+    maximumWeightLifted: number;
+    reps: number;
+    oneRepMax: number;
+  };
+  flexibility: {
+    sitAndReach: number;
+  };
+  endurance: {
+    muscularEndurance: number;
+    cardiorespiratoryEndurance: number;
+  };
+  goalsAndPreferences: {
+    fitnessGoals: string[];
+    exercisePreferences: string[];
+  };
+  healthConditions: {
+    medicalHistory: string[];
+  };
+  lifestyle: {
+    activityLevel: string;
+    sleepDuration: string;
+    // stressLevel: string;
+    // sleepQuality: string;
+    // nutrition: string;
+    // hydration: string;
+    // alcohol: string;
+    // smoking: string;
+  };
 }

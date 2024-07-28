@@ -102,13 +102,9 @@ export class TrainerService {
         return null;
       }
 
-      const bodyInfo = bodyHealthInfo?.BodyInfo;
-      const healthInfo = bodyHealthInfo?.HealthInfo;
-
-      const workoutPlan = await this.aiPlanService.generateWorkoutPlan({
-        bodyInfo,
-        healthInfo,
-      });
+      const workoutPlan = await this.aiPlanService.generateWorkoutPlan(
+        bodyHealthInfo,
+      );
       logger.log(`Generated workout plan: ${JSON.stringify(workoutPlan)}`);
 
       return workoutPlan;

@@ -16,10 +16,9 @@ export class BodyHealthInfoService {
   ) {
     return await this.bodyHealthInfoRepository.create({
       memberId: memberId,
-      BodyInfo: bodyHealthInfo.bodyInfo,
-      HealthInfo: bodyHealthInfo.healthInfo,
-      note: bodyHealthInfo.note,
-      verifiedBy: bodyHealthInfo.verifiedBy,
+      bodyHealthInfo: bodyHealthInfo.bodyHealthInfo,
+      note: bodyHealthInfo?.note,
+      verifiedBy: bodyHealthInfo?.verifiedBy,
       status: BODY_HEALTH_INFO_RECORD_STATUS.PENDING,
       trainerId: bodyHealthInfo.trainerId,
       WorkoutPlan: bodyHealthInfo.workoutPlan,
