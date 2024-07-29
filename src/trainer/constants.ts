@@ -1,0 +1,4 @@
+export enum TRAINER_TYPE {
+  ADMIN = 'ADMINISTRATOR',
+  NORMAL_USER = 'NORMAL USER',
+}
