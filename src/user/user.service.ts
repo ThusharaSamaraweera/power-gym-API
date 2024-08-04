@@ -17,10 +17,10 @@ export class UserService {
     return this.userRepository.findOne({ email });
   }
 
-  async getUserById(logger: Logger, id: Types.ObjectId) {
-    logger.log(`getUserById: ${id}`);
+  async getUserById(logger: Logger, id: string) {
+    logger.log(`getUserById: clerk user id ${id}`);
     try {
-      const user = await this.userRepository.findOne({ id });
+      const user = await this.userRepository.findOne({ clerkUserId: id });
 
       if (!user || !user._id) {
         logger.log(`getUserById: ${id} not found`);

@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
+  IsDate,
   // IsDate,
   IsEmail,
   IsEnum,
@@ -40,15 +41,15 @@ export class SignupRequestDto {
   @ApiProperty({
     required: true,
   })
-  // @IsDate()
-  @IsNotEmpty()
+  @IsDate()
+  @IsOptional()
   dateOfBirth: string;
 
   @ApiProperty({
-    required: true,
+    required: false,
   })
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   gender: string;
 
   @ApiProperty({
@@ -62,16 +63,17 @@ export class SignupRequestDto {
     required: true,
   })
   @IsString()
-  @IsNotEmpty()
+  // @IsNotEmpty()
+  @IsOptional()
   phone: string;
 
   @ApiProperty({
-    required: true,
+    // required: true,
     enum: PACKAGE_TYPE,
   })
-  @IsNotEmpty()
-  @IsEnum(PACKAGE_TYPE)
-  @IsString()
+  // @IsNotEmpty()
+  // @IsEnum(PACKAGE_TYPE)
+  // @IsString()
   packageType: PACKAGE_TYPE;
 
   // @ApiProperty({
