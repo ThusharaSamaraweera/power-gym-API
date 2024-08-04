@@ -27,18 +27,6 @@ export class UserController {
     private readonly userService: UserService,
   ) {}
 
-  @Post(':userId/body-health-info')
-  async createBodyHealthInfo(
-    @Body() payload: CreateBodyHealthInfoDto,
-    @Param('userId') userId: string,
-  ) {
-    const memberId = new Types.ObjectId(userId);
-    return await this.bodyHealthInfoService.createBodyHealthInfo(
-      payload,
-      memberId,
-    );
-  }
-
   @Post('/')
   async createUser(@Body() payload: CreateUserRequestDto) {
     const existingUser = await this.userService.getUserByEmail(payload.email);
@@ -55,5 +43,22 @@ export class UserController {
   @Get('')
   async getAllUsers() {
     return await this.userService.getAllUsersFromDb(this.logger);
+  }
+
+  @Get('/:clerkUserId')
+  async getUserById(@Param('clerkUserId') clerkUserId: string) {
+    return await this.userService.getUserById(this.logger, clerkUserId);
+  }
+
+  @Post(':userId/body-health-info')
+  async createBodyHealthInfo(
+    @Body() payload: CreateBodyHealthInfoDto,
+    @Param('userId') userId: string,
+  ) {
+    const memberId = new Types.ObjectId(userId);
+    return await this.bodyHealthInfoService.createBodyHealthInfo(
+      payload,
+      memberId,
+    );
   }
 }
