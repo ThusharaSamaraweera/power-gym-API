@@ -1,6 +1,5 @@
 import { BODY_HEALTH_INFO_RECORD_STATUS } from './../user/types';
 import { Injectable, Logger } from '@nestjs/common';
-import { TrainerRepository } from './repository/trainer.repository';
 import { BodyHealthInfoRepository } from 'src/user/repository/body-health-info.repository';
 import { UserRepository } from 'src/user//repository/user.repository';
 import { Types } from 'mongoose';
@@ -15,7 +14,6 @@ import { NotFoundException } from '@nestjs/common';
 @Injectable()
 export class TrainerService {
   constructor(
-    private readonly trainerRepository: TrainerRepository,
     private readonly bodyHealthInfoRepository: BodyHealthInfoRepository,
     private readonly userRepository: UserRepository,
     private configService: ConfigService,
