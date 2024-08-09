@@ -55,6 +55,11 @@ export class UserDocument extends AbstractDocument {
     required: true,
   })
   clerkUserId: string;
+
+  @Prop({
+    required: false,
+  })
+  trainerId?: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(UserDocument);

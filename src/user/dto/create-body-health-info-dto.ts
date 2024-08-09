@@ -36,14 +36,13 @@ export class CreateBodyHealthInfoDto {
     format: 'email',
     description: 'Email of the user who verified the body health info',
   })
-  @IsEmail()
   @IsNotEmpty()
   verifiedBy: string;
 
-  @ApiProperty()
-  @IsString()
-  @IsNotEmpty()
-  trainerId: string;
+  // @ApiProperty()
+  // @IsString()
+  // @IsNotEmpty()
+  // trainerId: string;
 
   @ApiProperty()
   @Type(() => WorkoutPlanDto)
