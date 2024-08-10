@@ -5,8 +5,8 @@ import {
   Get,
   Logger,
   Post,
-  // Query,
   Param,
+  Query,
   // UseGuards,
 } from '@nestjs/common';
 import { CreateBodyHealthInfoDto } from './dto/create-body-health-info-dto';
@@ -16,6 +16,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { CreateUserRequestDto } from './dto/create-user-request-dto';
 import { UserService } from './user.service';
 import { ServiceLogger } from 'src/common';
+import { BODY_HEALTH_INFO_RECORD_STATUS } from './types';
 // import { JwtAuthGuard } from 'src/common/auth/jwt-auth.guard';
 
 @ApiTags('Users')
@@ -41,8 +42,8 @@ export class UserController {
 
   // @UseGuards(JwtAuthGuard)
   @Get('')
-  async getAllUsers() {
-    return await this.userService.getAllUsersFromDb(this.logger);
+  async getAllUsers(@Query('userRoles') userRoles: string) {
+    return await this.userService.getAllUsersFromDb(this.logger, userRoles);
   }
 
   @Get('/:clerkUserId')
@@ -59,6 +60,18 @@ export class UserController {
     return await this.bodyHealthInfoService.createBodyHealthInfo(
       payload,
       memberId,
+    );
+  }
+
+  @Get(':userId/body-health-info')
+  async getBodyHealthInfoByMemberId(
+    @Param('userId') userId: string,
+    @Query('status') status: BODY_HEALTH_INFO_RECORD_STATUS,
+  ) {
+    const memberId = new Types.ObjectId(userId);
+    return await this.bodyHealthInfoService.getBodyHealthInfoByMemberId(
+      memberId,
+      status,
     );
   }
 }
