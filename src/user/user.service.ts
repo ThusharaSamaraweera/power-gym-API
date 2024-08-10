@@ -1,16 +1,20 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { UserRepository } from './repository/user.repository';
-import { Types } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { CreateUserRequestDto } from './dto/create-user-request-dto';
 import { UserRoles, UserStatus } from 'src/common';
 import { Clerk } from '@clerk/clerk-sdk-node';
 import { ConfigService } from '@nestjs/config';
+import { BodyHealthInfoDocument, UserDocument } from './modal';
+import { InjectModel } from '@nestjs/mongoose';
 
 @Injectable()
 export class UserService {
   constructor(
     private readonly userRepository: UserRepository,
     private configService: ConfigService,
+    @InjectModel(BodyHealthInfoDocument.name)
+    private bodyHealthInfoModel: Model<BodyHealthInfoDocument>,
   ) {}
 
   async getUserByEmail(email: string) {
@@ -82,5 +86,32 @@ export class UserService {
     });
 
     return users;
+  }
+
+  async getAllUsersWithDetails(logger: Logger, trainerId: string = null) {
+    logger.log(`getAllUsersWithDetails: ${trainerId}`);
+
+    if (trainerId) {
+      const members = await this.userRepository.find({
+        trainerId: trainerId,
+      });
+
+      const bodyHealthInfo = await this.bodyHealthInfoModel
+        .find({
+          memberId: { $in: members.map((member) => member._id) },
+        })
+        .populate('trainerId');
+
+      const usersWithBodyHealthInfo = JSON.parse(JSON.stringify(members));
+
+      // append body health info records to members
+      usersWithBodyHealthInfo?.forEach((user) => {
+        user.bodyHealthInfo = bodyHealthInfo.filter(
+          (info) => info.memberId.toString() === user._id.toString(),
+        );
+      });
+
+      return usersWithBodyHealthInfo;
+    }
   }
 }

@@ -2,7 +2,12 @@ import { Module } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { DatabaseModule } from 'src/common/database/mongodb';
-import { UserDocument, UserSchema } from 'src/user/modal';
+import {
+  BodyHealthInfoDocument,
+  BodyHealthInfoSchema,
+  UserDocument,
+  UserSchema,
+} from 'src/user/modal';
 import { UserRepository } from '../user/repository/user.repository';
 import { UserService } from 'src/user/user.service';
 // import { JwtModule } from '@nestjs/jwt';
@@ -15,6 +20,7 @@ import {
   imports: [
     DatabaseModule.forfeature([
       { name: UserDocument.name, schema: UserSchema },
+      { name: BodyHealthInfoDocument.name, schema: BodyHealthInfoSchema },
     ]),
     // JwtModule.registerAsync({
     //   imports: [ConfigModule],

@@ -46,6 +46,14 @@ export class UserController {
     return await this.userService.getAllUsersFromDb(this.logger, userRoles);
   }
 
+  @Get('/details')
+  async getAllUsersWithDetails(@Query('trainerId') trainerId: string) {
+    return await this.userService.getAllUsersWithDetails(
+      this.logger,
+      trainerId,
+    );
+  }
+
   @Get('/:clerkUserId')
   async getUserById(@Param('clerkUserId') clerkUserId: string) {
     return await this.userService.getUserById(this.logger, clerkUserId);
