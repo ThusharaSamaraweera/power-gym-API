@@ -167,7 +167,11 @@ export class TrainerService {
         )}`,
       );
 
-      return requestedPlans;
+      console.log(
+        `${requestedPlans?.length} plans found for trainer ${trainerId}`,
+      );
+
+      return requestedPlans ?? [];
     } catch (error) {
       logger.error(
         `Get ${status} exercise plans for trainer ${trainerId} error: ${JSON.stringify(

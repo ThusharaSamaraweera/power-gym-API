@@ -2,7 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { UserRepository } from './repository/user.repository';
 import { Types } from 'mongoose';
 import { CreateUserRequestDto } from './dto/create-user-request-dto';
-import { UserStatus } from 'src/common';
+import { UserRoles, UserStatus } from 'src/common';
 import { Clerk } from '@clerk/clerk-sdk-node';
 import { ConfigService } from '@nestjs/config';
 
@@ -72,8 +72,15 @@ export class UserService {
     return userList;
   }
 
-  async getAllUsersFromDb(logger: Logger) {
-    logger.log('getAllUsersFromDb called');
-    return this.userRepository.find();
+  async getAllUsersFromDb(logger: Logger, roles: string) {
+    logger.log(`getAllUsersFromDb: ${roles} roles`);
+
+    const rolesArray = roles.split(',');
+
+    const users = await this.userRepository.find({
+      role: { $in: rolesArray },
+    });
+
+    return users;
   }
 }
