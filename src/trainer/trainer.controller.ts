@@ -15,6 +15,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { CreateTrainerRequestDto } from './dto/create-trainer-request-dto';
 import { TrainerService } from './trainer.service';
 import { ServiceLogger } from 'src/common';
+import { BODY_HEALTH_INFO_RECORD_STATUS } from 'src/user/types';
 
 @ApiTags('Trainers')
 @Controller('trainers')
@@ -68,11 +69,11 @@ export class TrainerController {
   @Get(':trainerId/plans')
   async getRequestedExercisePlansByTrainerId(
     @Param('trainerId') trainerId: string,
-    @Query('status') status: string,
+    @Query('status') status: BODY_HEALTH_INFO_RECORD_STATUS,
   ) {
     return await this.trainerService.getRequestedExercisePlansByTrainerId(
       this.logger,
-      trainerId,
+      new Types.ObjectId(trainerId),
       status,
     );
   }
