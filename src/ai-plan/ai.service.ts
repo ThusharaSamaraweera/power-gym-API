@@ -29,7 +29,7 @@ export class AiPlanService {
 
       Response Format:
       {
-          "duration": "50", // Duration in days to follow this workout plan
+          "duration": 50, // Duration in days to follow this workout plan
           "plan": [
             {
                 day: "Monday",

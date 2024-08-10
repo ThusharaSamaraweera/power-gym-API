@@ -2,14 +2,15 @@ import { BODY_HEALTH_INFO_RECORD_STATUS } from './../user/types';
 import { Injectable, Logger } from '@nestjs/common';
 import { BodyHealthInfoRepository } from 'src/user/repository/body-health-info.repository';
 import { UserRepository } from 'src/user//repository/user.repository';
-import { Types } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { CreateTrainerRequestDto } from './dto/create-trainer-request-dto';
 import { UserStatus } from 'src/common';
-import { Clerk } from '@clerk/clerk-sdk-node';
 import { ConfigService } from '@nestjs/config';
 import { AiPlanService } from './../ai-plan/ai.service';
 import { UserRoles } from 'src/common';
 import { NotFoundException } from '@nestjs/common';
+import { BodyHealthInfoDocument } from 'src/user/modal';
+import { InjectModel } from '@nestjs/mongoose';
 
 @Injectable()
 export class TrainerService {
@@ -18,6 +19,8 @@ export class TrainerService {
     private readonly userRepository: UserRepository,
     private configService: ConfigService,
     private aiPlanService: AiPlanService,
+    @InjectModel(BodyHealthInfoDocument.name)
+    private bodyHealthInfoModel: Model<BodyHealthInfoDocument>,
   ) {}
 
   async getTrainerByEmail(logger: Logger, email: string) {
@@ -81,27 +84,27 @@ export class TrainerService {
     }
   }
 
-  generateRandomPassword(passwordLength) {
-    let password: string;
-    const chars =
-      '0123456789abcdefghijklmnopqrstuvwxyz!@#$%^&*()ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    for (let i = 0; i <= passwordLength; i++) {
-      const randomNumber = Math.floor(Math.random() * chars.length);
-      password += chars.substring(randomNumber, randomNumber + 1);
-    }
-    return password;
-  }
+  // generateRandomPassword(passwordLength) {
+  //   let password: string;
+  //   const chars =
+  //     '0123456789abcdefghijklmnopqrstuvwxyz!@#$%^&*()ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  //   for (let i = 0; i <= passwordLength; i++) {
+  //     const randomNumber = Math.floor(Math.random() * chars.length);
+  //     password += chars.substring(randomNumber, randomNumber + 1);
+  //   }
+  //   return password;
+  // }
 
-  async getAllUsersFromClerk(logger: Logger) {
-    logger.log('getAllUsersFromClerk');
-    const clerkClient = Clerk({
-      secretKey: this.configService.get<string>('CLERK_SECRET_KEY'),
-    });
+  // async getAllUsersFromClerk(logger: Logger) {
+  //   logger.log('getAllUsersFromClerk');
+  //   const clerkClient = Clerk({
+  //     secretKey: this.configService.get<string>('CLERK_SECRET_KEY'),
+  //   });
 
-    const userList = await clerkClient.users.getUserList();
+  //   const userList = await clerkClient.users.getUserList();
 
-    return userList;
-  }
+  //   return userList;
+  // }
 
   async getAllTrainersFromDb(logger: Logger) {
     logger.log('getAllTrainersFromDb called');
@@ -151,10 +154,13 @@ export class TrainerService {
   ) {
     logger.log(`Get ${status} exercise plans for trainer ${trainerId}`);
     try {
-      const requestedPlans = await this.bodyHealthInfoRepository.find({
-        trainerId,
-        status,
-      });
+      const requestedPlans = await this.bodyHealthInfoModel
+        .find({
+          trainerId,
+          status,
+        })
+        .populate('memberId');
+
       logger.log(
         `Requested plans for trainer ${trainerId}: ${JSON.stringify(
           requestedPlans,
