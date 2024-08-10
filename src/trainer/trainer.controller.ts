@@ -7,6 +7,7 @@ import {
   Post,
   Query,
   Param,
+  Put,
   // UseGuards,
 } from '@nestjs/common';
 import { Types } from 'mongoose';
@@ -76,7 +77,7 @@ export class TrainerController {
     );
   }
 
-  @Post(':trainerId/plans/:bodyHealthInfoId')
+  @Put(':trainerId/plans/:bodyHealthInfoId')
   async submitWorkoutPlan(
     @Body() payload: any,
     @Param('trainerId') trainerId: string,

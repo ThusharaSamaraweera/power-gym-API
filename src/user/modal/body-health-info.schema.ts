@@ -6,7 +6,7 @@ import { Types } from 'mongoose';
 
 @Schema({ timestamps: true })
 export class BodyHealthInfoDocument extends AbstractDocument {
-  @Prop({ required: true })
+  @Prop({ required: true, ref: 'UserDocument', type: Types.ObjectId })
   memberId: Types.ObjectId;
 
   // @Prop({ type: BodyInfoDto })
@@ -27,7 +27,7 @@ export class BodyHealthInfoDocument extends AbstractDocument {
   @Prop({ required: true })
   status: string;
 
-  @Prop({ required: true })
+  @Prop({ required: true, ref: 'UserDocument', type: Types.ObjectId })
   trainerId: string;
 
   @Prop({ type: WorkoutPlanDto, required: false })

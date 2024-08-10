@@ -58,6 +58,7 @@ export class UserDocument extends AbstractDocument {
 
   @Prop({
     required: false,
+    ref: 'UserDocument',
   })
   trainerId?: string;
 }
