@@ -5,6 +5,8 @@ import { DatabaseModule } from 'src/common/database/mongodb';
 import {
   BodyHealthInfoDocument,
   BodyHealthInfoSchema,
+  ProgressRecordDocument,
+  ProgressRecordSchema,
   UserDocument,
   UserSchema,
 } from 'src/user/modal';
@@ -21,6 +23,7 @@ import {
     DatabaseModule.forfeature([
       { name: UserDocument.name, schema: UserSchema },
       { name: BodyHealthInfoDocument.name, schema: BodyHealthInfoSchema },
+      { name: ProgressRecordDocument.name, schema: ProgressRecordSchema },
     ]),
     // JwtModule.registerAsync({
     //   imports: [ConfigModule],

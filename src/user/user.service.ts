@@ -5,7 +5,11 @@ import { CreateUserRequestDto } from './dto/create-user-request-dto';
 import { UserRoles, UserStatus } from 'src/common';
 import { Clerk } from '@clerk/clerk-sdk-node';
 import { ConfigService } from '@nestjs/config';
-import { BodyHealthInfoDocument, UserDocument } from './modal';
+import {
+  BodyHealthInfoDocument,
+  ProgressRecordDocument,
+  UserDocument,
+} from './modal';
 import { InjectModel } from '@nestjs/mongoose';
 
 @Injectable()
@@ -17,6 +21,8 @@ export class UserService {
     private bodyHealthInfoModel: Model<BodyHealthInfoDocument>,
     @InjectModel(UserDocument.name)
     private userModel: Model<UserDocument>,
+    @InjectModel(ProgressRecordDocument.name)
+    private progressRecordModel: Model<ProgressRecordDocument>,
   ) {}
 
   async getUserByEmail(email: string) {
@@ -90,8 +96,14 @@ export class UserService {
     return users;
   }
 
-  async getAllUsersWithDetails(logger: Logger, trainerId: string = null) {
+  async getAllUsersWithDetails(
+    logger: Logger,
+    trainerId: string = null,
+    roles: string = null,
+  ) {
     logger.log(`getAllUsersWithDetails: ${trainerId}`);
+
+    let usersWithBodyHealthInfo = [];
 
     if (trainerId) {
       const members = await this.userModel
@@ -100,22 +112,55 @@ export class UserService {
         })
         .populate('trainerId');
 
-      const bodyHealthInfo = await this.bodyHealthInfoModel
-        .find({
-          memberId: { $in: members.map((member) => member._id) },
-        })
-        .populate('trainerId');
+      logger.log(`${members?.length} members found for trainer ${trainerId}`);
 
-      const usersWithBodyHealthInfo = JSON.parse(JSON.stringify(members));
+      usersWithBodyHealthInfo = JSON.parse(JSON.stringify(members));
+    } else if (roles && !trainerId) {
+      const userRoles: UserRoles = roles?.split(',') as unknown as UserRoles;
 
-      // append body health info records to members
-      usersWithBodyHealthInfo?.forEach((user) => {
-        user.bodyHealthInfo = bodyHealthInfo.filter(
-          (info) => info.memberId.toString() === user._id.toString(),
-        );
+      const users = await this.userRepository.find({
+        role: { $in: userRoles },
       });
 
-      return usersWithBodyHealthInfo;
+      logger.log(`${users?.length} users found for roles ${roles}`);
+      usersWithBodyHealthInfo = JSON.parse(JSON.stringify(users));
     }
+
+    const bodyHealthInfo = await this.bodyHealthInfoModel.find({
+      memberId: {
+        $in: usersWithBodyHealthInfo.map(
+          (member) => new Types.ObjectId(member._id),
+        ),
+      },
+    });
+    // .populate('trainerId');
+
+    logger.log(`${bodyHealthInfo?.length} body health info records found`);
+
+    // append body health info records to members
+    usersWithBodyHealthInfo?.forEach((user) => {
+      user.bodyHealthInfo = bodyHealthInfo.filter(
+        (info) => info.memberId.toString() === user._id.toString(),
+      );
+    });
+
+    const progressRecords = await this.progressRecordModel.find({
+      memberId: {
+        $in: usersWithBodyHealthInfo.map(
+          (member) => new Types.ObjectId(member._id),
+        ),
+      },
+    });
+
+    logger.log(`${progressRecords?.length} progress records found`);
+
+    // append progress records to members
+    usersWithBodyHealthInfo?.forEach((user) => {
+      user.progressRecords = progressRecords.filter(
+        (record) => record.memberId.toString() === user._id.toString(),
+      );
+    });
+
+    return usersWithBodyHealthInfo;
   }
 }
