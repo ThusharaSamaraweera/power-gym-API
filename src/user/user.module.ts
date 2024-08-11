@@ -14,6 +14,11 @@ import { BodyHealthInfoRepository } from './repository/body-health-info.reposito
 import { BodyHealthInfoService } from './bodyHealthInfo.service';
 import { LoggerModule } from 'src/common';
 import { AuthModule } from 'src/auth/auth.module';
+import {
+  ProgressRecordDocument,
+  ProgressRecordSchema,
+} from './modal/progress-record.schema';
+import { ProgressRecordService } from './progressRecord.service';
 
 @Module({
   imports: [
@@ -22,6 +27,7 @@ import { AuthModule } from 'src/auth/auth.module';
     DatabaseModule.forfeature([
       { name: UserDocument.name, schema: UserSchema },
       { name: BodyHealthInfoDocument.name, schema: BodyHealthInfoSchema },
+      { name: ProgressRecordDocument.name, schema: ProgressRecordSchema },
     ]),
     AuthModule,
   ],
@@ -30,6 +36,7 @@ import { AuthModule } from 'src/auth/auth.module';
     UserRepository,
     BodyHealthInfoRepository,
     BodyHealthInfoService,
+    ProgressRecordService,
   ],
   controllers: [UserController],
 })
