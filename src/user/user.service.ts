@@ -15,6 +15,8 @@ export class UserService {
     private configService: ConfigService,
     @InjectModel(BodyHealthInfoDocument.name)
     private bodyHealthInfoModel: Model<BodyHealthInfoDocument>,
+    @InjectModel(UserDocument.name)
+    private userModel: Model<UserDocument>,
   ) {}
 
   async getUserByEmail(email: string) {
@@ -92,9 +94,11 @@ export class UserService {
     logger.log(`getAllUsersWithDetails: ${trainerId}`);
 
     if (trainerId) {
-      const members = await this.userRepository.find({
-        trainerId: trainerId,
-      });
+      const members = await this.userModel
+        .find({
+          trainerId: trainerId,
+        })
+        .populate('trainerId');
 
       const bodyHealthInfo = await this.bodyHealthInfoModel
         .find({

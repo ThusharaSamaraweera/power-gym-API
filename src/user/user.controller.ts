@@ -17,6 +17,7 @@ import { CreateUserRequestDto } from './dto/create-user-request-dto';
 import { UserService } from './user.service';
 import { ServiceLogger } from 'src/common';
 import { BODY_HEALTH_INFO_RECORD_STATUS } from './types';
+import { ProgressRecordService } from './progressRecord.service';
 // import { JwtAuthGuard } from 'src/common/auth/jwt-auth.guard';
 
 @ApiTags('Users')
@@ -26,6 +27,7 @@ export class UserController {
   constructor(
     private readonly bodyHealthInfoService: BodyHealthInfoService,
     private readonly userService: UserService,
+    private readonly progressRecordService: ProgressRecordService,
   ) {}
 
   @Post('/')
@@ -81,5 +83,22 @@ export class UserController {
       memberId,
       status,
     );
+  }
+
+  @Post(':userId/progressRecords')
+  async createProgressRecord(
+    @Body() payload: any,
+    @Param('userId') userId: string,
+  ) {
+    const memberId = new Types.ObjectId(userId);
+    try {
+      return await this.progressRecordService.createProgressRecord(
+        payload,
+        new Types.ObjectId(memberId),
+      );
+    } catch (error) {
+      console.error(error);
+      return 'Failed to create progress record';
+    }
   }
 }
