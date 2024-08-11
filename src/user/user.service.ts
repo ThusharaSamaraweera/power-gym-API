@@ -99,7 +99,7 @@ export class UserService {
   async getAllUsersWithDetails(
     logger: Logger,
     trainerId: string = null,
-    roles: string = null,
+    // roles: string = null,
   ) {
     logger.log(`getAllUsersWithDetails: ${trainerId}`);
 
@@ -115,14 +115,12 @@ export class UserService {
       logger.log(`${members?.length} members found for trainer ${trainerId}`);
 
       usersWithBodyHealthInfo = JSON.parse(JSON.stringify(members));
-    } else if (roles && !trainerId) {
-      const userRoles: UserRoles = roles?.split(',') as unknown as UserRoles;
+    } else {
+      // const userRoles: UserRoles = roles?.split(',') as unknown as UserRoles;
 
-      const users = await this.userRepository.find({
-        role: { $in: userRoles },
-      });
+      const users = await this.userModel.find().populate('trainerId');
 
-      logger.log(`${users?.length} users found for roles ${roles}`);
+      logger.log(`${users?.length} users found`);
       usersWithBodyHealthInfo = JSON.parse(JSON.stringify(users));
     }
 

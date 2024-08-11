@@ -49,14 +49,10 @@ export class UserController {
   }
 
   @Get('/details')
-  async getAllUsersWithDetails(
-    @Query('trainerId') trainerId: string,
-    @Query('userRoles') userRoles: string,
-  ) {
+  async getAllUsersWithDetails(@Query('trainerId') trainerId: string) {
     return await this.userService.getAllUsersWithDetails(
       this.logger,
       trainerId,
-      userRoles,
     );
   }
 
