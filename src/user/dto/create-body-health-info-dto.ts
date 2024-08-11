@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { BodyHealthInfoDto } from './body-health-info-dto';
+import { WorkoutPlanDto } from 'src/ai-plan/dto/ai-plan.dto';
 import {
   IsEmail,
   IsNotEmpty,
@@ -35,7 +36,21 @@ export class CreateBodyHealthInfoDto {
     format: 'email',
     description: 'Email of the user who verified the body health info',
   })
-  @IsEmail()
   @IsNotEmpty()
   verifiedBy: string;
+
+  // @ApiProperty()
+  // @IsString()
+  // @IsNotEmpty()
+  // trainerId: string;
+
+  @ApiProperty()
+  @Type(() => WorkoutPlanDto)
+  @IsOptional()
+  workoutPlan: WorkoutPlanDto;
+
+  @ApiProperty()
+  @IsString()
+  @IsOptional()
+  status: string;
 }

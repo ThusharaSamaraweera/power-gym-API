@@ -22,3 +22,34 @@ export enum PACKAGE_TYPE {
 //   SIX_MONTHS = 'SIX_MONTHS',
 //   ANNUAL = 'ANNUAL',
 // }
+
+export enum BODY_HEALTH_INFO_RECORD_STATUS {
+  PENDING = 'PENDING',
+  COMPLETED = 'COMPLETED',
+}
+
+export class ProgressRecord {
+  anthropometricMeasurements: {
+    weight: number;
+    height: number;
+    waistCircumference: number;
+    hipCircumference: number;
+    chestCircumference: number;
+    armCircumference: number;
+    thighCircumference: number;
+    abdomenCircumference: number;
+    tricepsCircumference: number;
+    supraIliacCircumference: number;
+    waistToHipRatio: number;
+  };
+  bodyComposition: {
+    bodyMassIndex: number;
+    bodyDensity: number;
+    bodyFatPercentage: number;
+  };
+  cardiovascularFitness: {
+    maximumWeightLifted: number;
+    reps: number;
+    oneRepMax: number;
+  };
+}

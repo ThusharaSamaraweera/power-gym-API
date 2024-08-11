@@ -17,16 +17,16 @@ export class UserDocument extends AbstractDocument {
   @Prop({ required: true })
   role: UserRoles;
 
-  @Prop({ required: true })
+  @Prop({ required: false })
   dateOfBirth: string;
 
-  @Prop({ required: true })
+  @Prop({ required: false })
   gender: string;
 
   @Prop()
   image?: string;
 
-  @Prop({ required: true })
+  @Prop({ required: false })
   phone: string;
 
   @Prop({ required: true })
@@ -55,6 +55,12 @@ export class UserDocument extends AbstractDocument {
     required: true,
   })
   clerkUserId: string;
+
+  @Prop({
+    required: false,
+    ref: 'UserDocument',
+  })
+  trainerId?: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(UserDocument);

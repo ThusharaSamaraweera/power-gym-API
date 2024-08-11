@@ -12,7 +12,7 @@ export enum UserStatus {
 }
 
 export interface IJwtToken {
-  id: Types.ObjectId;
+  id: string;
   email: string;
   userRole: UserRoles;
 }

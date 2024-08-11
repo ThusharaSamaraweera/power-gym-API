@@ -1,10 +1,13 @@
 import { Injectable, Logger } from '@nestjs/common';
-import * as bcrypt from 'bcryptjs';
+// import * as bcrypt from 'bcryptjs';
 import { SignupRequestDto } from './dto/signup-request-dto';
-import { IJwtToken, UserStatus } from 'src/common';
+import {
+  // IJwtToken,
+  UserStatus,
+} from 'src/common';
 import { UserRepository } from '../user/repository/user.repository';
-import { UserDto } from 'src/common/dto/user-dto';
-import { LoginResponse } from './types';
+// import { UserDto } from 'src/common/dto/user-dto';
+// import { LoginResponse } from './types';
 import { UserDocument } from 'src/user/modal';
 import { ConfigService } from '@nestjs/config';
 
@@ -19,15 +22,19 @@ export class AuthService {
   async signup(logger: Logger, body: SignupRequestDto): Promise<UserDocument> {
     logger.log(`Signup service called with email ${body.email}`);
 
-    const isFreePackage = body.packageType === 'FREE';
+    // const isFreePackage = body?.packageType === 'FREE';
 
-    return await this.userRepository.create({
+    const createdUser = await this.userRepository.create({
       ...body,
       status: UserStatus.ACTIVE,
-      dateOfBirth: new Date(body.dateOfBirth).toISOString(),
-      packageStartDate: isFreePackage ? new Date().toISOString() : null,
+      dateOfBirth: body?.dateOfBirth
+        ? new Date(body.dateOfBirth).toISOString()
+        : null,
+      packageStartDate: null,
       clerkUserId: body.clerkUserId,
     });
+
+    return createdUser;
   }
 
   // async login(

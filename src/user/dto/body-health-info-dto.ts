@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+// import { ApiProperty } from '@nestjs/swagger';
 
 // export class BodyInfoDto {
 //   @ApiProperty({
@@ -43,6 +43,7 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class BodyHealthInfoDto {
   anthropometricMeasurements: {
+    age: number;
     weight: number;
     height: number;
     waistCircumference: number;

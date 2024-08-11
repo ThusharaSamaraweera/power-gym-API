@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { IsNotEmpty, IsString } from 'class-validator';
 import { UserRoles, UserStatus } from 'src/common';
 import { PACKAGE_TYPE } from 'src/user/types';
 
@@ -21,21 +22,32 @@ export class SignupResponseDto {
   @ApiProperty({
     type: String,
   })
-  dateOfBirth: string;
-
-  gender: string;
-
-  image: string;
-
-  phone: string;
+  dateOfBirth?: string;
 
   @ApiProperty({
-    enum: UserStatus,
+    type: String,
   })
-  status: UserStatus;
+  gender?: string;
+
+  @ApiProperty({
+    type: String,
+  })
+  image?: string;
+
+  @ApiProperty({
+    type: String,
+  })
+  phone?: string;
 
   @ApiProperty({
     enum: PACKAGE_TYPE,
   })
-  packageType: PACKAGE_TYPE;
+  packageType?: PACKAGE_TYPE;
+
+  @ApiProperty({
+    required: true,
+  })
+  @IsString()
+  @IsNotEmpty()
+  clerkUserId: string;
 }

@@ -5,8 +5,9 @@ import {
   Get,
   Logger,
   Post,
+  Param,
   Query,
-  UseGuards,
+  // UseGuards,
 } from '@nestjs/common';
 import { CreateBodyHealthInfoDto } from './dto/create-body-health-info-dto';
 import { Types } from 'mongoose';
@@ -15,7 +16,9 @@ import { ApiTags } from '@nestjs/swagger';
 import { CreateUserRequestDto } from './dto/create-user-request-dto';
 import { UserService } from './user.service';
 import { ServiceLogger } from 'src/common';
-import { JwtAuthGuard } from 'src/common/auth/jwt-auth.guard';
+import { BODY_HEALTH_INFO_RECORD_STATUS } from './types';
+import { ProgressRecordService } from './progressRecord.service';
+// import { JwtAuthGuard } from 'src/common/auth/jwt-auth.guard';
 
 @ApiTags('Users')
 @Controller('users')
@@ -24,18 +27,8 @@ export class UserController {
   constructor(
     private readonly bodyHealthInfoService: BodyHealthInfoService,
     private readonly userService: UserService,
+    private readonly progressRecordService: ProgressRecordService,
   ) {}
-
-  @Post(':userId/body-health-info')
-  async createBodyHealthInfo(
-    @Body() payload: CreateBodyHealthInfoDto,
-    @Query('userId') memberId: Types.ObjectId,
-  ) {
-    return await this.bodyHealthInfoService.createBodyHealthInfo(
-      payload,
-      memberId,
-    );
-  }
 
   @Post('/')
   async createUser(@Body() payload: CreateUserRequestDto) {
@@ -51,7 +44,69 @@ export class UserController {
 
   // @UseGuards(JwtAuthGuard)
   @Get('')
-  async getAllUsers() {
-    return await this.userService.getAllUsersFromDb(this.logger);
+  async getAllUsers(@Query('userRoles') userRoles: string) {
+    return await this.userService.getAllUsersFromDb(this.logger, userRoles);
+  }
+
+  @Get('/details')
+  async getAllUsersWithDetails(@Query('trainerId') trainerId: string) {
+    return await this.userService.getAllUsersWithDetails(
+      this.logger,
+      trainerId,
+    );
+  }
+
+  @Get('/:clerkUserId')
+  async getUserById(@Param('clerkUserId') clerkUserId: string) {
+    return await this.userService.getUserById(this.logger, clerkUserId);
+  }
+
+  @Post(':userId/body-health-info')
+  async createBodyHealthInfo(
+    @Body() payload: CreateBodyHealthInfoDto,
+    @Param('userId') userId: string,
+  ) {
+    const memberId = new Types.ObjectId(userId);
+    return await this.bodyHealthInfoService.createBodyHealthInfo(
+      payload,
+      memberId,
+    );
+  }
+
+  @Get(':userId/body-health-info')
+  async getBodyHealthInfoByMemberId(
+    @Param('userId') userId: string,
+    @Query('status') status: BODY_HEALTH_INFO_RECORD_STATUS,
+  ) {
+    const memberId = new Types.ObjectId(userId);
+    return await this.bodyHealthInfoService.getBodyHealthInfoByMemberId(
+      memberId,
+      status,
+    );
+  }
+
+  @Post(':userId/progressRecords')
+  async createProgressRecord(
+    @Body() payload: any,
+    @Param('userId') userId: string,
+  ) {
+    const memberId = new Types.ObjectId(userId);
+    try {
+      return await this.progressRecordService.createProgressRecord(
+        payload,
+        new Types.ObjectId(memberId),
+      );
+    } catch (error) {
+      console.error(error);
+      return 'Failed to create progress record';
+    }
+  }
+
+  @Get(':userId/progressRecords')
+  async getProgressRecordByMemberId(@Param('userId') userId: string) {
+    const memberId = new Types.ObjectId(userId);
+    return await this.progressRecordService.getProgressRecordByMemberId(
+      memberId,
+    );
   }
 }
