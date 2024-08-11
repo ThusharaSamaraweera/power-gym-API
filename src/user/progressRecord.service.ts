@@ -24,4 +24,8 @@ export class ProgressRecordService {
 
     return createdProgressRecord;
   }
+
+  async getProgressRecordByMemberId(memberId: Types.ObjectId) {
+    return await this.progressRecordModel.find({ memberId: memberId });
+  }
 }

@@ -101,4 +101,12 @@ export class UserController {
       return 'Failed to create progress record';
     }
   }
+
+  @Get(':userId/progressRecords')
+  async getProgressRecordByMemberId(@Param('userId') userId: string) {
+    const memberId = new Types.ObjectId(userId);
+    return await this.progressRecordService.getProgressRecordByMemberId(
+      memberId,
+    );
+  }
 }
