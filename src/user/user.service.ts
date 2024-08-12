@@ -161,4 +161,17 @@ export class UserService {
 
     return usersWithBodyHealthInfo;
   }
+
+  async updateUser(logger: Logger, payload: any, userId: Types.ObjectId) {
+    logger.log(`updateUser: ${userId}`);
+
+    const updatingUser = {
+      trainerId: new Types.ObjectId(payload?.trainerId),
+    };
+    return await this.userModel.findOneAndUpdate(
+      { _id: userId },
+      { $set: updatingUser },
+      { new: true },
+    );
+  }
 }
