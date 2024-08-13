@@ -2,6 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { AbstractDocument } from 'src/common/database/mongodb/abstract.schema';
 import { UserRoles, UserStatus } from 'src/common';
 import { PACKAGE_TYPE } from '../types';
+import { Types } from 'mongoose';
 
 @Schema({ timestamps: true })
 export class UserDocument extends AbstractDocument {
@@ -59,8 +60,9 @@ export class UserDocument extends AbstractDocument {
   @Prop({
     required: false,
     ref: 'UserDocument',
+    type: Types.ObjectId,
   })
-  trainerId?: string;
+  trainerId?: Types.ObjectId;
 }
 
 export const UserSchema = SchemaFactory.createForClass(UserDocument);

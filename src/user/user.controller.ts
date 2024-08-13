@@ -7,6 +7,7 @@ import {
   Post,
   Param,
   Query,
+  Put,
   // UseGuards,
 } from '@nestjs/common';
 import { CreateBodyHealthInfoDto } from './dto/create-body-health-info-dto';
@@ -46,6 +47,20 @@ export class UserController {
   @Get('')
   async getAllUsers(@Query('userRoles') userRoles: string) {
     return await this.userService.getAllUsersFromDb(this.logger, userRoles);
+  }
+
+  @Put('/:userId')
+  async updateUser(@Body() payload: any, @Param('userId') userId: string) {
+    try {
+      return await this.userService.updateUser(
+        this.logger,
+        payload,
+        new Types.ObjectId(userId),
+      );
+    } catch (error) {
+      console.error(error);
+      return 'Failed to update user';
+    }
   }
 
   @Get('/details')
