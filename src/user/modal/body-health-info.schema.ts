@@ -28,7 +28,7 @@ export class BodyHealthInfoDocument extends AbstractDocument {
   status: string;
 
   @Prop({ required: true, ref: 'UserDocument', type: Types.ObjectId })
-  trainerId: string;
+  trainerId: Types.ObjectId;
 
   @Prop({ type: WorkoutPlanDto, required: false })
   WorkoutPlan: WorkoutPlanDto;

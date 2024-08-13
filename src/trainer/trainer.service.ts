@@ -149,7 +149,7 @@ export class TrainerService {
 
   async getRequestedExercisePlansByTrainerId(
     logger: Logger,
-    trainerId: string,
+    trainerId: Types.ObjectId,
     status: string,
   ) {
     logger.log(`Get ${status} exercise plans for trainer ${trainerId}`);
@@ -161,13 +161,11 @@ export class TrainerService {
         })
         .populate('memberId');
 
-      logger.log(
-        `Requested plans for trainer ${trainerId}: ${JSON.stringify(
-          requestedPlans,
-        )}`,
+      console.log(
+        `${requestedPlans?.length} plans found for trainer ${trainerId}`,
       );
 
-      return requestedPlans;
+      return requestedPlans ?? [];
     } catch (error) {
       logger.error(
         `Get ${status} exercise plans for trainer ${trainerId} error: ${JSON.stringify(

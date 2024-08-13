@@ -10,6 +10,8 @@ import { BodyHealthInfoService } from 'src/user/bodyHealthInfo.service';
 import {
   BodyHealthInfoDocument,
   BodyHealthInfoSchema,
+  ProgressRecordDocument,
+  ProgressRecordSchema,
   UserDocument,
   UserSchema,
 } from 'src/user/modal';
@@ -24,6 +26,7 @@ import { UserRepository } from 'src/user/repository/user.repository';
     DatabaseModule.forfeature([
       { name: BodyHealthInfoDocument.name, schema: BodyHealthInfoSchema },
       { name: UserDocument.name, schema: UserSchema },
+      { name: ProgressRecordDocument.name, schema: ProgressRecordSchema },
     ]),
     AuthModule,
   ],
